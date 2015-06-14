@@ -1,22 +1,24 @@
 #!/bin/sh
 
-if [ ! -f "source/tl_2014_06_place/tl_2014_06_place.shp" ]
+brew install wget
+brew install gdal
+npm update -g topojson
+
+# download source file
+if [ ! -f "source/tl_2010_06_zcta510.shp" ]
 then
     echo "Downloading shape file .."
-    wget -P source http://www2.census.gov/geo/tiger/TIGER2014/PLACE/tl_2014_06_place.zip
-
-    echo "Unzipping archive .."
-    unzip source/tl_2014_06_place.zip -d source/tl_2014_06_place
-    rm source/tl_2014_06_place.zip
+    wget -NP source http://www2.census.gov/geo/tiger/TIGER2010/ZCTA5/2010/tl_2010_06_zcta510.zip
+	unzip "source/tl_2010_06_zcta510.zip" -d source
 fi
 
-if [ ! -f "cities.geojson" ]
+mkdir -p working
+
+# create topojson for california
+if [ ! -f "working/CA_zip.topo.json" ]
 then
-    ogr2ogr -f GeoJSON cities.geojson source/tl_2014_06_place/tl_2014_06_place.shp
+	ogr2ogr -f "GeoJSON" working/CA_zip.json source/tl_2010_06_zcta510.shp tl_2010_06_zcta510
+	topojson -p -o working/CA_zip.topo.json working/CA_zip.json
 fi
 
-if [ ! -f "cities.json" ]
-then
-    topojson -s 7e-9 --id-property=+GEOID -o cities.json -- cities.geojson
-fi
 

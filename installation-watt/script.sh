@@ -4,6 +4,10 @@ brew install wget
 brew install gdal
 npm update -g topojson
 
+mkdir -p output
+mkdir -p source
+mkdir -p working
+
 # download source file
 if [ ! -f "source/tl_2010_06_zcta510.shp" ]
 then
@@ -12,13 +16,11 @@ then
 	unzip "source/tl_2010_06_zcta510.zip" -d source
 fi
 
-mkdir -p working
-
 # create topojson for california
-if [ ! -f "working/CA_zip.topo.json" ]
+if [ ! -f "output/CA_zip.topo.json" ]
 then
 	ogr2ogr -f "GeoJSON" working/CA_zip.json source/tl_2010_06_zcta510.shp tl_2010_06_zcta510
-	topojson -p -o working/CA_zip.topo.json working/CA_zip.json
+	topojson -p -o output/CA_zip.topo.json working/CA_zip.json
 fi
 
 

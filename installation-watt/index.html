@@ -34,11 +34,27 @@
 var width = 960,
     height = 600;
 
+// projection taken from here: https://groups.google.com/forum/#!topic/d3-js/lR7GGswygI8 
 var projection = d3.geo.albers() 
-      .translate([480, 250]) 
+      .translate([width / 2, height / 2]) 
       .scale(2700) 
       .rotate([122.4183, 0]) 
       .center([0, 37.7750]);
+      
+// projection taken from here: http://shancarter.github.io/ucb-dataviz-fall-2013/classes/interactive-maps/final-map.html
+var projection = d3.geo.albers()
+     .translate([width / 2, height / 2])
+     .parallels([34, 40.5])
+     .rotate([120, 0])
+     .scale(3000);
+
+// adapted
+var projection = d3.geo.albers()
+     .translate([width / 2, height / 2])
+     .parallels([54, 40.5])
+     .rotate([120, 0])
+     .center([0, 37.7750])
+     .scale(2700);
 
 var path = d3.geo.path()
     .projection(projection);

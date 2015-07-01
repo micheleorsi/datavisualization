@@ -4,6 +4,10 @@ HOW TO CREATE ASSETS
 ./script.sh
 ```
 
+ASSETS folder
+=============
+In this file there are files where our study starts from  
+
 
 References
 ==========

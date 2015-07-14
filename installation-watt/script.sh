@@ -7,7 +7,7 @@ brew install sqlite
 
 # geo stuff
 brew install gdal
-npm install -g topojson
+npm update -g topojson
 
 # other stuff
 brew install wget

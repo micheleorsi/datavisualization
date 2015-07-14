@@ -2,26 +2,10 @@
 <meta charset="utf-8">
 <style>
 
-.graticule {
-  fill: none;
-  stroke: #777;
-  stroke-width: .5px;
-  stroke-opacity: .5;
-}
-
-.land {
-  fill: #222;
-}
-
 .county-boundary {
   fill: none;
   stroke: #fff;
   stroke-width: .5px;
-}
-
-.state-boundary {
-  fill: none;
-  stroke: #fff;
 }
 
 
@@ -35,18 +19,18 @@ var width = 960,
     height = 600;
 
 // projection taken from here: https://groups.google.com/forum/#!topic/d3-js/lR7GGswygI8 
-var projection = d3.geo.albers() 
-      .translate([width / 2, height / 2]) 
-      .scale(2700) 
-      .rotate([122.4183, 0]) 
-      .center([0, 37.7750]);
+// var projection = d3.geo.albers() 
+//       .translate([width / 2, height / 2]) 
+//       .scale(2700) 
+//       .rotate([122.4183, 0]) 
+//       .center([0, 37.7750]);
       
 // projection taken from here: http://shancarter.github.io/ucb-dataviz-fall-2013/classes/interactive-maps/final-map.html
-var projection = d3.geo.albers()
-     .translate([width / 2, height / 2])
-     .parallels([34, 40.5])
-     .rotate([120, 0])
-     .scale(3000);
+// var projection = d3.geo.albers()
+//      .translate([width / 2, height / 2])
+//      .parallels([34, 40.5])
+//      .rotate([120, 0])
+//      .scale(3000);
 
 // adapted
 var projection = d3.geo.albers()
@@ -59,36 +43,22 @@ var projection = d3.geo.albers()
 var path = d3.geo.path()
     .projection(projection);
 
-var graticule = d3.geo.graticule();
-
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-svg.append("path")
-    .datum(graticule)
-    .attr("class", "graticule")
-    .attr("d", path);
 
-d3.json("output/us.json", function(error, us) {
+d3.json("output/CA_zip.topo.json", function(error, us) {
   if (error) throw error;
 
   svg.insert("path", ".graticule")
-      .datum(topojson.feature(us, us.objects.land))
-      .attr("class", "land")
-      .attr("d", path);
-
-  svg.insert("path", ".graticule")
-      .datum(topojson.mesh(us, us.objects.counties, function(a, b) { 
+      .datum(topojson.mesh(us, us.objects.CA_zip, function(a, b) { 
       	return a !== b && !(a.id / 1000 ^ b.id / 1000); 
       	}))
       .attr("class", "county-boundary")
       .attr("d", path);
 
-  svg.insert("path", ".graticule")
-      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-      .attr("class", "state-boundary")
-      .attr("d", path);
+  
 });
 
 d3.select(self.frameElement).style("height", height + "px");

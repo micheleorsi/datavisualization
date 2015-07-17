@@ -2,12 +2,13 @@
 
 # db stuff
 rm working/*.db
-rm working/CA_zip.json
 rm output/*.csv
-rm output/CA_zip.topo.json
 brew install sqlite
 
 # geo stuff
+rm working/CA_zip.json
+rm output/CA_zip.topo.json
+rm working/ca-projected.shp
 brew install gdal
 npm update -g topojson
 
@@ -40,9 +41,11 @@ sqlite3 working/installation.db < sqlcommands.sql
 # create topojson for california
 if [ ! -f "output/CA_zip.topo.json" ]
 then
-	# create a new file in 'GeoJSON' format called 'CA_zip.json' from file 'source/tl_2010_06_zcta510.shp'
+	# create a new file in 'GeoJSON' format, called 'CA_zip.json' from file 'source/tl_2010_06_zcta510.shp'
 	ogr2ogr -f "GeoJSON" working/CA_zip.json source/tl_2010_06_zcta510.shp
-	# transformation geojson to topojson
+	# generate a shapefile in projected coordinates (california albers)
+	ogr2ogr -f 'ESRI Shapefile' -t_srs 'EPSG:3310' working/ca-projected.shp source/tl_2010_06_zcta510.shp
+	# transform geojson into topojson
 	topojson -p -o output/CA_zip.topo.json working/CA_zip.json
 	# merging trend2007 file with geojson file
 	topojson -e output/trend2007.csv --id-property ZCTA5CE10,ZIPCODE -p -o output/CA_zip_2007.json -- source/tl_2010_06_zcta510.shp

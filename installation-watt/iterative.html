@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/* CSS goes here. */
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script>
+
+// set width and height
+var width = 960,
+    height = 1160;
+
+// create projection
+var projection = d3.geo.albers()
+     .translate([width / 2, height / 2])
+     .parallels([54, 40.5])
+     .rotate([120, 0])
+     .center([0, 37.7750])
+     .scale(5000);
+
+// create path
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body")
+	.append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("output/CA_zip_2007.json", function(error, ca) {
+
+  var subunits = topojson.feature(ca, ca.objects.tl_2010_06_zcta510);
+  
+  svg.append("path")
+      .datum(subunits)
+      .attr("d", path);
+});
+
+</script>

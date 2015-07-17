@@ -5,6 +5,13 @@
 
 /* CSS goes here. */
 
+.counties {
+  fill: none;
+  stroke: #eee;
+  stroke-linejoin: round;
+}
+
+
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -32,12 +39,18 @@ var svg = d3.select("body")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("output/CA_zip_2007.json", function(error, ca) {
+d3.json("output/ca.topo.json", function(error, data) {
 
-  var subunits = topojson.feature(ca, ca.objects.tl_2010_06_zcta510);
+  var zipcodes = topojson.feature(data, data.objects.tl_2010_06_zcta510);
   
+  //svg.append("path")
+  //    .datum(subunits)
+  //    .attr("d", path);
+
+
   svg.append("path")
-      .datum(subunits)
+      .datum(topojson.mesh(data, data.objects.counties, function(a, b) { return a !== b; }))
+      .attr("class", "counties")
       .attr("d", path);
 });
 

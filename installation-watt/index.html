@@ -48,11 +48,11 @@ var svg = d3.select("body").append("svg")
     .attr("height", height);
 
 
-d3.json("output/CA_zip.topo.json", function(error, us) {
+d3.json("output/CA_zip_2007.json", function(error, us) {
   if (error) throw error;
 
   svg.insert("path", ".graticule")
-      .datum(topojson.mesh(us, us.objects.CA_zip, function(a, b) { 
+      .datum(topojson.mesh(us, us.objects.tl_2010_06_zcta510, function(a, b) { 
       	return a !== b && !(a.id / 1000 ^ b.id / 1000); 
       	}))
       .attr("class", "county-boundary")

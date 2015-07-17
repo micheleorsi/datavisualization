@@ -6,11 +6,8 @@ rm output/*.csv
 brew install sqlite
 
 # geo stuff
-rm working/CA_zip.json
-rm output/CA_zip.topo.json
-rm working/ca-projected.shp
-rm working/merge.shp
-rm working/ca.json
+rm working/*.json
+rm working/*.shp
 brew install gdal
 npm update -g topojson
 
@@ -43,14 +40,18 @@ sqlite3 working/installation.db < sqlcommands.sql
 # create topojson for california
 if [ ! -f "output/CA_zip.topo.json" ]
 then
-	# merge counties shp and california zip shp into topojson
-	topojson -p -o output/ca.topo.json assets/ca/counties.shp source/tl_2010_06_zcta510.shp
+	# convert counties and zipcode shapefiles to GeoJson
+	ogr2ogr -f "GeoJSON" working/counties.geo.json assets/ca/counties.shp
+	ogr2ogr -f "GeoJSON" working/zipcodes.geo.json source/tl_2010_06_zcta510.shp
+
+	# merge counties shp and california zip shp into topojson, extracting ZCTA5CE10 as id property
+	topojson --id-property ZCTA5CE10 -p -o output/ca.topo.json assets/ca/counties.shp source/tl_2010_06_zcta510.shp
 
 	# merge two shapefils
 	# ogr2ogr working/merge.shp source/tl_2010_06_zcta510.shp
 	# ogr2ogr -update -append working/merge.shp assets/ca/counties.shp -nln merge
 	# create a new file in 'GeoJSON' format, called 'ca.json' from file 'working/merge.shp'
-	#ogr2ogr -f "GeoJSON" working/ca.json working/merge.shp
+	#
 	# generate a shapefile in projected coordinates (california albers)
 	#ogr2ogr -f 'ESRI Shapefile' -t_srs 'EPSG:3310' working/ca-projected.shp source/tl_2010_06_zcta510.shp
 	

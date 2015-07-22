@@ -1,31 +1,25 @@
 #!/bin/sh
 
+# create dirs
+mkdir -p output
+mkdir -p source
+mkdir -p working
+
+# clean folders
+rm working/*
+rm output/*
+
 # db stuff
-rm working/*.db
-rm output/*.csv
 brew install sqlite
 
 # geo stuff
-rm working/*.json
-rm working/*.shp
 brew install gdal
 npm update -g topojson
 
 # other stuff
 brew install wget
 
-# download population by zip code
-if [ ! -f "source/2010+Census+Population+By+Zipcode+(ZCTA).csv" ]
-then
-    # Download population file
-    wget -NP source https://s3.amazonaws.com/SplitwiseBlogJB/2010+Census+Population+By+Zipcode+\(ZCTA\).csv
-fi
-
-mkdir -p output
-mkdir -p source
-mkdir -p working
-
-# download source file
+# download source file for map
 if [ ! -f "source/tl_2010_06_zcta510.shp" ]
 then
     # Download shape file

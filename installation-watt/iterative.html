@@ -56,15 +56,13 @@ queue()
 function ready(error, map, data) {
   if (error) throw error;
 
-  var rateById = {};
+  var ratioByZip = {};
 
   data.forEach(function(d) { 
-  	rateById[d.ZIPCODE] = +d.RATIO;
+  	ratioByZip[d.ZIPCODE] = +d.RATIO;
   });
 
-  console.log(rateById);
-
-  // 
+  //  fill zipcode
   svg.append("g")
   		.attr("class", "zipcodes")
     .selectAll("path")
@@ -72,10 +70,10 @@ function ready(error, map, data) {
     .enter().append("path")
     	.attr("d", path)
     	.style("fill", function(d) { 
-    		return color(rateById[d.id]); 
+    		return color(ratioByZip[d.id]); 
     	});
 
-  // color county borders
+  // county borders
   svg.append("path")
       .datum(topojson.mesh(map, map.objects.counties, function(a, b) { 
       	return a !== b; 

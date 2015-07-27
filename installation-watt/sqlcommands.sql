@@ -57,3 +57,28 @@ LEFT OUTER JOIN population AS P1 ON (I1.zipcode=P1.Id2);
 SELECT * FROM trend2012;
 
 
+-- Temp query:
+-- SELECT COUNT(*) FROM (SELECT zipcode FROM installation GROUP BY zipcode) -> 1401
+
+-- SELECT COUNT(*) FROM (SELECT Id2 FROM population GROUP BY Id2) -> 1769
+
+
+-- SELECT I1.zipcode AS ZIPCODE, ifnull(I2.trend, 0) AS TREND, P1.Estimate AS POPULATION, ifnull(I2.trend, 0)*1.0/P1.Estimate AS RATIO
+-- FROM (SELECT zipcode FROM installation GROUP BY zipcode) AS I1 
+-- LEFT OUTER JOIN population AS P1 ON (I1.zipcode=P1.Id2)
+-- LEFT OUTER JOIN installation AS I2 ON (I1.zipcode=I2.zipcode) AND (I2.year = 2007);
+
+-- SELECT zipcode FROM installation GROUP BY zipcode EXCEPT SELECT zipcode FROM trend2007;
+
+-- SELECT COUNT(*) FROM (SELECT zipcode FROM trend2007) -> 1401
+
+-- Threeshold
+-- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 191;
+-- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 351; 
+-- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 511; 
+-- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 671; 
+-- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 831; 
+-- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 991;
+-- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 1151;
+-- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 1311;
+

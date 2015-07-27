@@ -72,8 +72,8 @@ var color = d3.scale.threshold()
 
 // download resources async
 queue()
-    .defer(d3.json, "/output/ca.topo.json")
-    .defer(d3.csv, "/output/trend2012.csv")
+    .defer(d3.json, "output/ca.topo.json")
+    .defer(d3.csv, "output/trend2012.csv")
     .await(ready);
 
 // Start of Choropleth drawing
@@ -114,7 +114,7 @@ function ready(error, map, data) {
   //Adding mouseevents
   .on("mouseover", function(d) {
     d3.select(this).style("opacity", 1);
-    console.log(d.id + " : " + ratioByZip[d.id]);
+    //console.log(d.id + " : " + ratioByZip[d.id]);
     //div.text(d.id + " : " + ratioByZip[d.id])
     //.style("left", (d3.event.pageX) + "px")
     //.style("top", (d3.event.pageY -30) + "px");

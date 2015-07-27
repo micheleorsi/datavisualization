@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/* CSS goes here. */
+
+.counties {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .3;
+}
+
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 150px;                  
+  height: 25px;                 
+  padding: 2px;             
+  font-size: 10px;     
+  background: #FFFFE0;
+  border: 1px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script>
+
+// set width and height
+var width = 960,
+    height = 1160;
+
+// create projection
+var projection = d3.geo.albers()
+     .translate([width / 2, height / 2])
+     .parallels([54, 40.5])
+     .rotate([120, 0])
+     .center([0, 37.7750])
+     .scale(5000);
+
+// create path
+var path = d3.geo.path()
+    .projection(projection);
+
+// prepare tooltip
+var div = d3.select("body")
+  .append("div")   
+  .attr("class", "tooltip")               
+  .style("opacity", 0);
+
+// create svg
+var svg = d3.select("body")
+	.append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// colors with order by ration, 6 buckets
+//var color = d3.scale.threshold()
+//    .domain([2.10174685871897, 7.67884031253415, 15.981556954189, 30.2441754791804, 867.977977165354])
+//    .range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);
+
+// colors with order by ration. 8 buckets + data not available
+var color = d3.scale.threshold()
+    .domain([-50, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554])
+    .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#006837","#004529"]);
+
+// download resources async
+queue()
+    .defer(d3.json, "/output/ca.topo.json")
+    .defer(d3.csv, "/output/trend2012.csv")
+    .await(ready);
+
+// Start of Choropleth drawing
+function ready(error, map, data) {
+  if (error) throw error;
+
+  var ratioByZip = {};
+
+  data.forEach(function(d) { 
+  	ratioByZip[d.ZIPCODE] = +d.RATIO;
+  });
+
+  // county borders
+  svg.append("path")
+      .datum(topojson.mesh(map, map.objects.counties, function(a, b) { 
+        return a !== b; 
+      }))
+      .attr("class", "counties")
+      .attr("d", path);
+
+  //  drawing choropleth
+  svg.append("g")
+  		.attr("class", "zipcodes")
+    .selectAll("path")
+    	.data(topojson.feature(map, map.objects.tl_2010_06_zcta510).features)
+    .enter().append("path")
+    	.attr("d", path)
+    	.style("fill", function(d) { 
+        value = ratioByZip[d.id];
+        // it is a zipcode present in the shp file, but we don't have any value
+        if(typeof value === 'undefined'){
+          value = 0;
+        };
+    		return color(value); 
+    	})
+      //.style("opacity", 0.5)
+
+  //Adding mouseevents
+  .on("mouseover", function(d) {
+    d3.select(this).style("opacity", 1);
+    console.log(d.id + " : " + ratioByZip[d.id]);
+    //div.text(d.id + " : " + ratioByZip[d.id])
+    //.style("left", (d3.event.pageX) + "px")
+    //.style("top", (d3.event.pageY -30) + "px");
+  })
+  .on("mouseout", function() {
+    d3.select(this).style("opacity", 0.8);
+  //  .transition().duration(300)
+  //  
+  //  div.transition().duration(300)
+  //  .style("opacity", 0);
+  })
+}
+
+</script>

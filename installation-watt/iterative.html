@@ -11,6 +11,19 @@
   stroke-opacity: .3;
 }
 
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 150px;                  
+  height: 25px;                 
+  padding: 2px;             
+  font-size: 10px;     
+  background: #FFFFE0;
+  border: 1px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+
 
 </style>
 <body>
@@ -34,6 +47,12 @@ var projection = d3.geo.albers()
 // create path
 var path = d3.geo.path()
     .projection(projection);
+
+// prepare tooltip
+var div = d3.select("body")
+  .append("div")   
+  .attr("class", "tooltip")               
+  .style("opacity", 0);
 
 // create svg
 var svg = d3.select("body")
@@ -62,7 +81,15 @@ function ready(error, map, data) {
   	ratioByZip[d.ZIPCODE] = +d.RATIO;
   });
 
-  //  fill zipcode
+  // county borders
+  svg.append("path")
+      .datum(topojson.mesh(map, map.objects.counties, function(a, b) { 
+        return a !== b; 
+      }))
+      .attr("class", "counties")
+      .attr("d", path);
+
+  //  drawing choropleth
   svg.append("g")
   		.attr("class", "zipcodes")
     .selectAll("path")
@@ -70,16 +97,29 @@ function ready(error, map, data) {
     .enter().append("path")
     	.attr("d", path)
     	.style("fill", function(d) { 
-    		return color(ratioByZip[d.id]); 
-    	});
+        value = ratioByZip[d.id];
+        if(typeof value === 'undefined'){
+          value = 0;
+        };
+    		return color(value); 
+    	})
+      .style("opacity", 0.8)
 
-  // county borders
-  svg.append("path")
-      .datum(topojson.mesh(map, map.objects.counties, function(a, b) { 
-      	return a !== b; 
-      }))
-      .attr("class", "counties")
-      .attr("d", path);
+  //Adding mouseevents
+  .on("mouseover", function(d) {
+    d3.select(this).style("opacity", 1);
+    console.log(d.id + " : " + ratioByZip[d.id]);
+    //div.text(d.id + " : " + ratioByZip[d.id])
+    //.style("left", (d3.event.pageX) + "px")
+    //.style("top", (d3.event.pageY -30) + "px");
+  })
+  .on("mouseout", function() {
+    d3.select(this).style("opacity", 0.8);
+  //  .transition().duration(300)
+  //  
+  //  div.transition().duration(300)
+  //  .style("opacity", 0);
+  })
 }
 
 </script>

@@ -7,8 +7,8 @@
 
 .counties {
   fill: none;
-  stroke: #fff;
-  stroke-linejoin: round;
+  stroke: #000;
+  stroke-opacity: .3;
 }
 
 
@@ -43,7 +43,7 @@ var svg = d3.select("body")
 
 // colors
 var color = d3.scale.threshold()
-    .domain([1, 3, 5, 7, 13])
+    .domain([0, 10, 50, 100, 500])
     .range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);
 
 // download resources async
@@ -59,19 +59,27 @@ function ready(error, map, data) {
   var rateById = {};
 
   data.forEach(function(d) { 
-  	rateById[d.ZIPCODE] = +d.RATIO; 
+  	rateById[d.ZIPCODE] = +d.RATIO;
   });
 
-  svg.append("g")
-      .attr("class", "zipcodes")
-    .selectAll("path")
-      .data(topojson.feature(map, map.objects.tl_2010_06_zcta510).features)
-    .enter().append("path")
-      .attr("d", path)
-      .style("fill", function(d) { return color(rateById[d.id]); });
+  console.log(rateById);
 
+  // 
+  svg.append("g")
+  		.attr("class", "zipcodes")
+    .selectAll("path")
+    	.data(topojson.feature(map, map.objects.tl_2010_06_zcta510).features)
+    .enter().append("path")
+    	.attr("d", path)
+    	.style("fill", function(d) { 
+    		return color(rateById[d.id]); 
+    	});
+
+  // color county borders
   svg.append("path")
-      .datum(topojson.mesh(map, map.objects.counties, function(a, b) { return a !== b; }))
+      .datum(topojson.mesh(map, map.objects.counties, function(a, b) { 
+      	return a !== b; 
+      }))
       .attr("class", "counties")
       .attr("d", path);
 }

@@ -129,3 +129,138 @@ function ready(error, map, data) {
 }
 
 </script>
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/* CSS goes here. */
+
+.counties {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .3;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+
+.legend {
+  font-size: 12px;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script>
+
+// set width and height
+var width = 960,
+    height = 1160;
+
+// create projection
+var projection = d3.geo.albers()
+     .translate([width / 2, height / 2])
+     .parallels([54, 40.5])
+     .rotate([120, 0])
+     .center([0, 37.7750])
+     .scale(6500);
+
+// create path
+var path = d3.geo.path()
+    .projection(projection);
+
+// create svg
+var svg = d3.select("body")
+	.append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// Setting color domains(intervals of values) for our map
+  var color_domain = [-50, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554]
+  var color = d3.scale.threshold()
+  .domain(color_domain)
+  .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#006837","#004529"]);
+ 
+  //Adding legend for our Choropleth
+  var ext_color_domain = [-100, 0, 2, 4, 8, 12, 17, 25, 40, 80]
+  var legend_labels = ["missing value","< 0.8", "0.8 - 3.4", "3.4 - 6.6", "6.6 - 10.8", "10.8 - 15.7", "15.7 - 22.5","22.5 - 33.2","33.2 - 70.8", "> 70.8"]              
+
+  var legend = svg.selectAll("g.legend")
+  .data(ext_color_domain)
+  .enter().append("g")
+  .attr("class", "legend");
+
+  var ls_w = 20, ls_h = 20;
+
+  legend.append("rect")
+  .attr("x", 20)
+  .attr("y", function(d, i){ return height - (i*ls_h) - 2*ls_h;})
+  .attr("width", ls_w)
+  .attr("height", ls_h)
+  .style("fill", function(d, i) { return color(d); })
+  .style("opacity", 0.8);
+
+  legend.append("text")
+  .attr("x", 50)
+  .attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 4;})
+  .text(function(d, i){ return legend_labels[i]; });
+
+// colors with order by ration, 6 buckets
+//var color = d3.scale.threshold()
+//    .domain([2.10174685871897, 7.67884031253415, 15.981556954189, 30.2441754791804, 867.977977165354])
+//    .range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);
+
+// colors with order by ration. 8 buckets + data not available
+var color_domain = [-50, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554];
+
+var color = d3.scale.threshold()
+    .domain(color_domain)
+    .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#006837","#004529"]);
+
+// download resources async
+queue()
+    .defer(d3.json, "output/ca.topo.json")
+    .defer(d3.csv, "output/trend2012.csv")
+    .await(ready);
+
+// Start of Choropleth drawing
+function ready(error, map, data) {
+  if (error) throw error;
+
+  var ratioByZip = {};
+
+  data.forEach(function(d) { 
+  	ratioByZip[d.ZIPCODE] = +d.RATIO;
+  });
+
+  // county borders
+  svg.append("path")
+      .datum(topojson.mesh(map, map.objects.counties, function(a, b) { 
+        return a !== b; 
+      }))
+      .attr("class", "counties")
+      .attr("d", path);
+
+  //  drawing choropleth
+  svg.append("g")
+  		.attr("class", "zipcodes")
+    .selectAll("path")
+    	.data(topojson.feature(map, map.objects.tl_2010_06_zcta510).features)
+    .enter().append("path")
+    	.attr("d", path)
+    	.style("fill", function(d) { 
+        value = ratioByZip[d.id];
+        // it is a zipcode present in the shp file, but we don't have any value
+        if(typeof value === 'undefined'){
+          value = 0;
+        };
+    		return color(value); 
+    	})
+}
+
+</script>

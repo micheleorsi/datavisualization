@@ -15,10 +15,15 @@ body {
   font-family: Arial, sans-serif;
 }
 
-
-.legend {
-  font-size: 12px;
+.key path {
+  display: none;
 }
+
+.key line {
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
 
 </style>
 <body>
@@ -28,8 +33,8 @@ body {
 <script>
 
 // set width and height
-var width = 960,
-    height = 1160;
+var width = 1240,
+    height = 1240;
 
 // create projection
 var projection = d3.geo.albers()
@@ -49,35 +54,49 @@ var svg = d3.select("body")
   .attr("width", width)
   .attr("height", height);
 
-// Setting color domains(intervals of values) for our map
-  var color_domain = [-50, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554];
-  var color = d3.scale.threshold()
-  .domain(color_domain)
-  .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#006837","#004529"]);
- 
-  //Adding legend for our Choropleth
-  var ext_color_domain = [-100, 0, 2, 4, 8, 12, 17, 25, 40, 80];
-  var legend_labels = ["missing value","< 0.8", "0.8 - 3.4", "3.4 - 6.6", "6.6 - 10.8", "10.8 - 15.7", "15.7 - 22.5","22.5 - 33.2","33.2 - 70.8", "> 70.8"];
 
-  var legend = svg.selectAll("g.legend")
-  .data(ext_color_domain)
-  .enter().append("g")
-  .attr("class", "legend");
+var formatNumber = d3.format(".2n");
 
-  var ls_w = 20, ls_h = 20;
+var color_domain = [-0.5, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554];
 
-  legend.append("rect")
-  .attr("x", 20)
-  .attr("y", function(d, i){ return height - (i*ls_h) - 2*ls_h;})
-  .attr("width", ls_w)
-  .attr("height", ls_h)
-  .style("fill", function(d, i) { return color(d); })
-  .style("opacity", 0.8);
+var color = d3.scale.threshold()
+    .domain(color_domain)
+    .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#006837","#004529"]);
 
-  legend.append("text")
-  .attr("x", 50)
-  .attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 4;})
-  .text(function(d, i){ return legend_labels[i]; });
+// A position encoding for the key only.
+var x = d3.scale.linear()
+    .domain([0, 80])
+    .range([0, 1000]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .tickSize(13)
+    .tickValues(color.domain())
+    .tickFormat(function(d) { return d > 0 ? formatNumber(d) : null; });
+
+var g = svg.append("g")
+    .attr("class", "key")
+    .attr("transform", "translate(40,40)");
+
+g.selectAll("rect")
+    .data(color.range().map(function(d, i) {
+      return {
+        x0: i ? x(color.domain()[i - 1]) : x.range()[0],
+        x1: i < color.domain().length ? x(color.domain()[i]) : x.range()[1],
+        z: d
+      };
+    }))
+  .enter().append("rect")
+    .attr("height", 8)
+    .attr("x", function(d) { return d.x0; })
+    .attr("width", function(d) { return d.x1 - d.x0; })
+    .style("fill", function(d) { return d.z; });
+
+g.call(xAxis).append("text")
+    .attr("class", "caption")
+    .attr("y", -6)
+    .text("Trend per zipcode");
 
 // colors with order by ration, 6 buckets
 //var color = d3.scale.threshold()

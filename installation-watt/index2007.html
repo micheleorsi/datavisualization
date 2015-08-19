@@ -11,19 +11,14 @@
   stroke-opacity: .3;
 }
 
-div.tooltip {   
-  position: absolute;           
-  text-align: center;           
-  width: 150px;                  
-  height: 25px;                 
-  padding: 2px;             
-  font-size: 10px;     
-  background: #FFFFE0;
-  border: 1px;      
-  border-radius: 8px;           
-  pointer-events: none;         
+body {
+  font-family: Arial, sans-serif;
 }
 
+
+.legend {
+  font-size: 12px;
+}
 
 </style>
 <body>
@@ -42,23 +37,47 @@ var projection = d3.geo.albers()
      .parallels([54, 40.5])
      .rotate([120, 0])
      .center([0, 37.7750])
-     .scale(5000);
+     .scale(6500);
 
 // create path
 var path = d3.geo.path()
     .projection(projection);
 
-// prepare tooltip
-var div = d3.select("body")
-  .append("div")   
-  .attr("class", "tooltip")               
-  .style("opacity", 0);
-
 // create svg
 var svg = d3.select("body")
-	.append("svg")
+  .append("svg")
     .attr("width", width)
     .attr("height", height);
+
+// Setting color domains(intervals of values) for our map
+  var color_domain = [-50, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554]
+  var color = d3.scale.threshold()
+  .domain(color_domain)
+  .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#006837","#004529"]);
+ 
+  //Adding legend for our Choropleth
+  var ext_color_domain = [-100, 0, 2, 4, 8, 12, 17, 25, 40, 80]
+  var legend_labels = ["missing value","< 0.8", "0.8 - 3.4", "3.4 - 6.6", "6.6 - 10.8", "10.8 - 15.7", "15.7 - 22.5","22.5 - 33.2","33.2 - 70.8", "> 70.8"]              
+
+  var legend = svg.selectAll("g.legend")
+  .data(ext_color_domain)
+  .enter().append("g")
+  .attr("class", "legend");
+
+  var ls_w = 20, ls_h = 20;
+
+  legend.append("rect")
+  .attr("x", 20)
+  .attr("y", function(d, i){ return height - (i*ls_h) - 2*ls_h;})
+  .attr("width", ls_w)
+  .attr("height", ls_h)
+  .style("fill", function(d, i) { return color(d); })
+  .style("opacity", 0.8);
+
+  legend.append("text")
+  .attr("x", 50)
+  .attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 4;})
+  .text(function(d, i){ return legend_labels[i]; });
 
 // colors with order by ration, 6 buckets
 //var color = d3.scale.threshold()
@@ -66,8 +85,10 @@ var svg = d3.select("body")
 //    .range(["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]);
 
 // colors with order by ration. 8 buckets + data not available
+var color_domain = [-50, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554];
+
 var color = d3.scale.threshold()
-    .domain([-50, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554])
+    .domain(color_domain)
     .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#006837","#004529"]);
 
 // download resources async
@@ -83,7 +104,7 @@ function ready(error, map, data) {
   var ratioByZip = {};
 
   data.forEach(function(d) { 
-  	ratioByZip[d.ZIPCODE] = +d.RATIO;
+    ratioByZip[d.ZIPCODE] = +d.RATIO;
   });
 
   // county borders
@@ -96,36 +117,19 @@ function ready(error, map, data) {
 
   //  drawing choropleth
   svg.append("g")
-  		.attr("class", "zipcodes")
+      .attr("class", "zipcodes")
     .selectAll("path")
-    	.data(topojson.feature(map, map.objects.tl_2010_06_zcta510).features)
+      .data(topojson.feature(map, map.objects.tl_2010_06_zcta510).features)
     .enter().append("path")
-    	.attr("d", path)
-    	.style("fill", function(d) { 
+      .attr("d", path)
+      .style("fill", function(d) { 
         value = ratioByZip[d.id];
         // it is a zipcode present in the shp file, but we don't have any value
         if(typeof value === 'undefined'){
           value = 0;
         };
-    		return color(value); 
-    	})
-      //.style("opacity", 0.5)
-
-  //Adding mouseevents
-  .on("mouseover", function(d) {
-    d3.select(this).style("opacity", 1);
-    //console.log(d.id + " : " + ratioByZip[d.id]);
-    //div.text(d.id + " : " + ratioByZip[d.id])
-    //.style("left", (d3.event.pageX) + "px")
-    //.style("top", (d3.event.pageY -30) + "px");
-  })
-  .on("mouseout", function() {
-  //  d3.select(this).style("opacity", 0.8);
-  //  .transition().duration(300)
-  //  
-  //  div.transition().duration(300)
-  //  .style("opacity", 0);
-  })
+        return color(value); 
+      })
 }
 
 </script>

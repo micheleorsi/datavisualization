@@ -25,9 +25,9 @@ div.tooltip {
   text-align: center;           
   width: 150px;                  
   height: 25px;                 
-  padding: 2px;             
-  font-size: 10px;     
-  background: #fc8d59;
+  padding: 5px;             
+  font-size: 12px;     
+  background: #e5f5f9;
   border: 2px;      
   border-radius: 8px;           
   pointer-events: none;         
@@ -91,6 +91,12 @@ var svg = d3.select("body")
   .attr("x", 50)
   .attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 4;})
   .text(function(d, i){ return legend_labels[i]; });
+ 
+  legend.append("text")
+    .attr("class", "caption")
+    .attr("x", 20)
+    .attr("y", height - (10*ls_h) - 2*ls_h)
+    .text("Watt/population per zipcode");
 
 // colors with order by ration, 6 buckets
 //var color = d3.scale.threshold()
@@ -152,9 +158,9 @@ function ready(error, map, data) {
     };
     d3.select(this).transition().duration(300).style("opacity", 1);
     div.transition().duration(300).style("opacity", 1)
-    div.text(d.id+ ": " + formatNumber(value))
+    div.html("zip "+d.id+ ":<br/> <strong>" + formatNumber(value)+"</strong> (Watt/pop)")
     .style("left", (d3.event.pageX) + "px")
-    .style("top", (d3.event.pageY -30) + "px");
+    .style("top", (d3.event.pageY -50) + "px");
   })
   .on("mouseout", function() {
     d3.select(this)

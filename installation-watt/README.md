@@ -48,9 +48,10 @@ select ZIP Code Tabulation Areas
 select 'California' 
 unzip file 
 
+```bash
 ogr2ogr -f "GeoJSON" california_geojson.json tl_2010_06_zcta510.shp
 topojson -o california_topojson.json california_geojson.json
-
+```
 
 * [climate map produced by Berkely](http://coolclimate.berkeley.edu/maps)
 * [tool to select the best colors](http://colorbrewer2.org/)

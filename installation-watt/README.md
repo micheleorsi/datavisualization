@@ -6,11 +6,13 @@ The data shown represents the Watt installed per popoulation
 Data visualization
 ------------------
 [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html)
+
 [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html)
 
 Installing via Homebrew
 -----------------------
-Before you can make any TopoJSON files, you’ll need to install Node.js, GDAL and Sqlite. Here’s how to do that using [Homebrew](http://brew.sh/) on Mac OS X:
+Before you'll need to install Node.js, GDAL and Sqlite. 
+Here’s how to do that using [Homebrew](http://brew.sh/) on Mac OS X:
 
 ```bash
 brew install node gdal sqlite wget
@@ -21,25 +23,23 @@ Then, clone this repository and install its dependencies:
 ```bash
 git clone https://github.com/micheleorsi/datavisualization.git
 cd datavisualization/installation-watt
-npm install -g topojson
+npm install topojson
 ```
 
 ASSETS folder
-=============
+-------------
 
 In this file there are several files that is not possible to automatically download from internet  
 
 * installation-data.csv: it is the file produced by our study. It contains these columns:
-** year
-** zipcode
-** city
-** county
-** installation_zip
-** trend
-
-DEMO
-----
-You can 
+  * year
+  * zipcode
+  * city
+  * county
+  * installation_zip
+  * trend
+* ACS_12_5YR_B01003_with_ann.csv: information regarding population
+* ca folder: all the shapefile needed for California
 
 References
 ==========

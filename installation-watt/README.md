@@ -3,11 +3,10 @@ INSTALLATION WATT
 This is a datavisualization to show the trend along the years (2007-2012) in California about how many residentials solar panels have been installed.
 The data shown represents the Watt installed per popoulation
 
-DATAVISUALIZATION
------------------
+Data visualization
+------------------
 [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html)
 [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html)
-
 
 Installing via Homebrew
 -----------------------

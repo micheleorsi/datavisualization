@@ -1,4 +1,4 @@
-INSTALLATION WATT
+Installation watt
 =================
 This is a datavisualization to show the trend along the years (2007-2012) in California about how many residentials solar panels have been installed.
 The data shown represents the Watt installed per popoulation

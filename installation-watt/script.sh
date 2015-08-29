@@ -9,16 +9,6 @@ mkdir -p working
 rm working/*
 rm output/*
 
-# db stuff
-brew install sqlite
-
-# geo stuff
-brew install gdal
-npm update -g topojson
-
-# other stuff
-brew install wget
-
 # download source file for map
 if [ ! -f "source/tl_2010_06_zcta510.shp" ]
 then

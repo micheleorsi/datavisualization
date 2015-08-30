@@ -1,6 +1,15 @@
 
 default: output/ca.topo.json output/ca-counties.topo.json output/trend2007.csv output/trend2012.csv output/trendcounty2007.csv output/trendcounty2012.csv
 
+calculatethreshold: db/installation.db output/trendcounty2007.csv output/trendcounty2012.csv
+	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 6" 
+	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 13"
+	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 20"
+	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 27"
+	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 34" 
+	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 41"
+	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 49"
+
 # topojson to work in the dataviz
 output/ca.topo.json: shp/ca/counties.shp shp/tl_2010_06_zcta510.shp
 	mkdir -p $(dir $@)

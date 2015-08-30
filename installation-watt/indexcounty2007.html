@@ -15,6 +15,12 @@ body {
   font-family: Arial, sans-serif;
 }
 
+svg {
+  margin-left:auto; 
+  margin-right:auto; 
+  display:block;
+}
+
 
 .legend {
   font-size: 12px;
@@ -41,8 +47,8 @@ div.tooltip {
 <script>
 
 // set width and height
-var width = 600,
-    height = 800;
+var width = 1200,
+    height = 700;
 
 // create projection
 var projection = d3.geo.albers()
@@ -50,7 +56,7 @@ var projection = d3.geo.albers()
      .parallels([54, 40.5])
      .rotate([120, 0])
      .center([0, 37.7750])
-     .scale(3500);
+     .scale(4000);
 
 // create path
 var path = d3.geo.path()
@@ -63,14 +69,14 @@ var svg = d3.select("body")
   .attr("height", height);
 
 // Setting color domains(intervals of values) for our map
-  var color_domain = [-50, 0.89374793287022, 3.4456745357533, 6.69421221864952, 10.8480010064288, 15.7158374293162, 22.54363601157, 33.2792996917682, 70.8635345847554];
+  var color_domain = [0.1, 9.08683983337195, 13.3119316029034, 17.9534530124231, 22.277386312877, 24.9786788212839, 30.4318106322997, 44.3501910355983];
   var color = d3.scale.threshold()
   .domain(color_domain)
-  .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#006837","#004529"]);
+  .range(["#ffffff","#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d","#238443","#005a32"]);
  
   //Adding legend for our Choropleth
-  var ext_color_domain = [-100, 0, 2, 4, 8, 12, 17, 25, 40, 80];
-  var legend_labels = ["missing value","< 0.8", "0.8 - 3.4", "3.4 - 6.6", "6.6 - 10.8", "10.8 - 15.7", "15.7 - 22.5","22.5 - 33.2","33.2 - 70.8", "> 70.8"];
+  var ext_color_domain = [0, 0.3, 10, 14, 18, 23, 26, 33, 45];
+  var legend_labels = ["missing value","< 9.08", "< 13.31", "< 17.95", "< 22.27", "< 24.97", "< 30.43", "< 44.35", "higher"];
 
   var legend = svg.selectAll("g.legend")
   .data(ext_color_domain)
@@ -129,6 +135,9 @@ function ready(error, map, data) {
       .attr("d", path)
       .attr("fill", function(d) { 
           value = ratioByCounty[d.id];
+          if(typeof value === 'undefined'){
+            value = 0;
+          };
           return color(value); 
       }).style("opacity", 0.8)
 

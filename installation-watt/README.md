@@ -28,7 +28,6 @@ npm install topojson
 
 ASSETS folder
 -------------
-
 In this file there are several files that is not possible to automatically download from internet  
 
 * installation-data.csv: it is the file produced by our study. It contains these columns:
@@ -38,7 +37,7 @@ In this file there are several files that is not possible to automatically downl
   * county: the county where the installation has been performed
   * installation_zip: the installation of that specific year in that specific zipcode
   * trend: the sum along the years for that specific zipcode
-* ACS_12_5YR_B01003_with_ann.csv, : information regarding population for each zipcode. To download:
+* ACS_12_5YR_B01003_with_ann.csv, ACS_11_5YR_B01003_with_ann.csv: information regarding population for each zipcode. To download:
   1. Go to factfinder2.census.gov (pay attention that from some specific internet providers the website is not available)
   2. Find where it says "American Community Survey" and click "get data »"
   3. Click the blue "Geographies" button on the left
@@ -67,15 +66,9 @@ In this file there are several files that is not possible to automatically downl
 
 References
 ==========
-http://www.census.gov/cgi-bin/geo/shapefiles2010/main
-select ZIP Code Tabulation Areas
-select 'California' 
-unzip file 
+I used a lot of resources to help diving in the field of data visualization and geospatial data.
 
-```bash
-ogr2ogr -f "GeoJSON" california_geojson.json tl_2010_06_zcta510.shp
-topojson -o california_topojson.json california_geojson.json
-```
+Here they are:
 
 * [climate map produced by Berkely](http://coolclimate.berkeley.edu/maps)
 * [tool to select the best colors](http://colorbrewer2.org/)

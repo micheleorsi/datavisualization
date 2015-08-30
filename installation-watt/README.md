@@ -7,6 +7,9 @@ Data visualization
 * [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html)
 * [Watt/population per zipcode in 2012](http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html)
 
+* [Watt/population per county in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/indexcounty2007.html)
+* [Watt/population per county in 2012](http://micheleorsi.github.io/datavisualization/installation-watt/indexcounty2012.html)
+
 Installing via Homebrew
 -----------------------
 Before to start you'll need to install some tools.

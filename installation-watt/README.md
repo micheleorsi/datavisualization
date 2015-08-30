@@ -15,7 +15,7 @@ Before you'll need to install Node.js, GDAL and Sqlite.
 Here’s how to do that using [Homebrew](http://brew.sh/) on Mac OS X:
 
 ```bash
-brew install node gdal sqlite wget
+brew install node gdal sqlite
 ```
 
 Then, clone this repository and install its dependencies:

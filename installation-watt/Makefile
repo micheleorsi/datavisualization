@@ -77,4 +77,4 @@ clean:
 	rm -fR output
 	rm -fR shp
 	rm -fR zip
-
+	rm -fR tmp

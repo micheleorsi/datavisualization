@@ -9,20 +9,21 @@ Data visualization
 
 Installing via Homebrew
 -----------------------
-Before you'll need to install Node.js, GDAL and Sqlite. 
+Before to start you'll need to install some tools.
 
 ### On Mac OS X
 Here's how to do that using [Homebrew](http://brew.sh/):
 
 ```bash
-brew install node gdal sqlite
+brew install node gdal sqlite git
 ```
 
 ### On Debian/Ubuntu Linux
 Here's how to do that on Ubuntu Linux:
 
 ```bash
-sudo apt-get install node sqlite gdal-bin
+sudo apt-get update
+sudo apt-get install nodejs npm curl sqlite gdal-bin git
 ```
 
 Then, clone this repository and install its dependencies:

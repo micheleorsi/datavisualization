@@ -1,12 +1,10 @@
 Installation watt
 =================
-This is a datavisualization to show the trend along the years (2007-2012) in California about how many residentials solar panels have been installed.
-The data shown represents the Watt installed per popoulation. 
+This datavisualization shows resindential solar panels installed in California between 2007-2012. Data is expressed in Watt installed per population 
 
 Data visualization
 ------------------
 [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html)
-
 [Watt/population per zipcode in 2012](http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html)
 
 Installing via Homebrew
@@ -28,7 +26,7 @@ npm install
 
 Make targets
 ------------
-In order to see the datavisualization you need three file:
+In order to see the datavisualization you need three files:
 * output/ca.topo.json 
 * output/trend2007.csv 
 * output/trend2012.csv
@@ -50,6 +48,9 @@ In this file there are several files that is not possible to automatically downl
   * county: the county where the installation has been performed
   * installation_zip: the installation of that specific year in that specific zipcode
   * trend: the sum along the years for that specific zipcode
+  
+  The study starts from these data: https://www.californiasolarstatistics.ca.gov
+  
 * ACS_12_5YR_B01003_with_ann.csv, ACS_11_5YR_B01003_with_ann.csv: information regarding population for each zipcode. To download:
   1. Go to factfinder2.census.gov (pay attention that from some specific internet providers the website is not available)
   2. Find where it says "American Community Survey" and click "get data »"
@@ -70,14 +71,12 @@ In this file there are several files that is not possible to automatically downl
   17. Wait for it to "build" your file
   18. When it’s ready, click "DOWNLOAD"
   19. Finally, expand the downloaded zip file and you will find the three files
-* sqlcommands.sql: a list of commands to compose the CSV file to use in datavisualization
-
+  
 References
 ==========
 I used a lot of resources to help diving in the field of data visualization and geospatial data.
 
 Here they are:
-
 * [climate map produced by Berkely](http://coolclimate.berkeley.edu/maps)
 * [tool to select the best colors](http://colorbrewer2.org/)
 * [Choropleth Maps](http://synthesis.sbecker.net/articles/2012/07/18/learning-d3-part-7-choropleth-maps)

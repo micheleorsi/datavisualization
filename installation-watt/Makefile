@@ -1,6 +1,7 @@
 
 default: output/ca.topo.json output/ca-counties.topo.json output/trend2007.csv output/trend2012.csv output/trendcounty2007.csv output/trendcounty2012.csv
 
+# temp queries to calculate threesholds
 calculatethreshold: db/installation.db output/trendcounty2007.csv output/trendcounty2012.csv
 	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 6" 
 	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 13"

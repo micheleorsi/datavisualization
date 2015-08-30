@@ -26,6 +26,19 @@ cd datavisualization/installation-watt
 npm install
 ```
 
+Make targets
+------------
+In order to see the datavisualization you need three file:
+* output/ca.topo.json 
+* output/trend2007.csv 
+* output/trend2012.csv
+
+You can generate them with this command
+```bash
+make
+```
+
+
 ASSETS folder
 -------------
 In this file there are several files that is not possible to automatically download from internet  

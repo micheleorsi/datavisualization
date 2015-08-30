@@ -57,7 +57,7 @@ In this file there are several files that is not possible to automatically downl
   17. Wait for it to "build" your file
   18. When it’s ready, click "DOWNLOAD"
   19. Finally, expand the downloaded zip file and you will find the three files
-* sqlcommands.sql
+* sqlcommands.sql: a list of commands to compose the CSV file to use in datavisualization
 
 References
 ==========

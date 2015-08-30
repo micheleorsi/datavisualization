@@ -1,11 +1,17 @@
 
-default: output/ca.topo.json output/trend2007.csv output/trend2012.csv output/trendcounty2007.csv output/trendcounty2012.csv
+default: output/ca.topo.json output/ca-counties.topo.json output/trend2007.csv output/trend2012.csv output/trendcounty2007.csv output/trendcounty2012.csv
 
 # topojson to work in the dataviz
 output/ca.topo.json: shp/ca/counties.shp shp/tl_2010_06_zcta510.shp
 	mkdir -p $(dir $@)
 	node_modules/.bin/topojson \
 		--id-property ZCTA5CE10 -p -o $@ shp/ca/counties.shp shp/tl_2010_06_zcta510.shp
+		
+# topojson to work in the dataviz
+output/ca-counties.topo.json: shp/ca/counties.shp
+	mkdir -p $(dir $@)
+	node_modules/.bin/topojson \
+		--id-property FIPS -p -o $@ shp/ca/counties.shp
 
 # mapping from zip to counties
 csv/zcta_county_rel_10.csv:
@@ -22,7 +28,7 @@ db/installation.db: csv/zcta_county_rel_10.csv
 output/%.csv: db/installation.db
 	mkdir -p $(dir $@)
 	mkdir -p tmp
-	rm tmp/export.sql
+	rm -fR tmp/export.sql
 	echo ".headers on" >> tmp/export.sql
 	echo ".mode csv" >> tmp/export.sql
 	echo ".output $(basename $@).csv" >> tmp/export.sql

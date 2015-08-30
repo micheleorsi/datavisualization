@@ -1,6 +1,9 @@
 
 default: clean output/ca.topo.json output/trend2007.csv output/trend2012.csv
 
+tempquery: db/installation.db
+	sqlite3 db/installation.db "SELECT * FROM data WHERE 1"
+
 # topojson to work in the dataviz
 output/ca.topo.json: shp/ca/counties.shp shp/tl_2010_06_zcta510.shp
 	mkdir -p $(dir $@)

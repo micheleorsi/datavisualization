@@ -7,7 +7,7 @@ Data visualization
 ------------------
 [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html)
 
-[Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html)
+[Watt/population per zipcode in 2012](http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html)
 
 Installing via Homebrew
 -----------------------
@@ -97,3 +97,4 @@ Here they are:
 * [russia choropleth](http://bl.ocks.org/KoGor/5685876)
 * [topojson repo](https://github.com/mbostock/topojson)
 * [National Atlas and U.S. Census Bureau script download](https://github.com/mbostock/us-atlas)
+

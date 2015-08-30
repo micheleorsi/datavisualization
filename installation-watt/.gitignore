@@ -6,3 +6,4 @@ gz
 db
 node_modules
 csv
+/tmp/

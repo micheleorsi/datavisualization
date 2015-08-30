@@ -1,8 +1,5 @@
 
-default: clean output/ca.topo.json output/trend2007.csv output/trend2012.csv
-
-tempquery: db/installation.db
-	sqlite3 db/installation.db "SELECT * FROM data WHERE 1"
+default: output/ca.topo.json output/trend2007.csv output/trend2012.csv output/trendcounty2007.csv output/trendcounty2012.csv
 
 # topojson to work in the dataviz
 output/ca.topo.json: shp/ca/counties.shp shp/tl_2010_06_zcta510.shp
@@ -21,21 +18,17 @@ db/installation.db: csv/zcta_county_rel_10.csv
 	mkdir -p $(dir $@)
 	sqlite3 $@ < commands/compose.sql
 	
-# trend2007 file (to use in dataviz)
-output/trend2007.csv: db/installation.db
+# trend files (to use in dataviz)
+output/%.csv: db/installation.db
 	mkdir -p $(dir $@)
-	sqlite3 db/installation.db < commands/trend2007.sql
-
-# trend2012 file (to use in dataviz)
-output/trend2012.csv: db/installation.db
-	mkdir -p $(dir $@)
-	sqlite3 db/installation.db < commands/trend2012.sql
+	mkdir -p tmp
+	rm tmp/export.sql
+	echo ".headers on" >> tmp/export.sql
+	echo ".mode csv" >> tmp/export.sql
+	echo ".output $(basename $@).csv" >> tmp/export.sql
+	echo "SELECT * FROM $(basename $(notdir $@));" >> tmp/export.sql
+	sqlite3 db/installation.db < tmp/export.sql
 	
-# installationwithcounties file
-output/installationwithcounties.csv: db/installation.db
-	mkdir -p $(dir $@)
-	sqlite3 db/installation.db < commands/installationwithcounties.sql
-
 # shape file with California zip code
 zip/tl_2010_06_zcta510.zip:
 	mkdir -p $(dir $@)

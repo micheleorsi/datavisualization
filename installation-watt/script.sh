@@ -1,22 +1,5 @@
 #!/bin/sh
 
-# create dirs
-mkdir -p output
-mkdir -p source
-mkdir -p working
-
-# clean folders
-rm working/*
-rm output/*
-
-# download source file for map
-if [ ! -f "source/tl_2010_06_zcta510.shp" ]
-then
-    # Download shape file
-    wget -NP source http://www2.census.gov/geo/tiger/TIGER2010/ZCTA5/2010/tl_2010_06_zcta510.zip
-    # unzip to source dir
-	unzip "source/tl_2010_06_zcta510.zip" -d source
-fi
 
 # create DB and applied sql commands in order to export csv final files
 sqlite3 working/installation.db < sqlcommands.sql

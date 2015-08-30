@@ -1,5 +1,5 @@
-/raw/
-/source/
-/working/
-/output/
-/libs/
+output
+zip
+shp
+gz
+db

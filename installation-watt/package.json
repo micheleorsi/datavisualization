@@ -1,0 +1,22 @@
+{
+  "name": "datavisualization-installation-watt",
+  "version": "0.0.1",
+  "description": "Roll your own installation-watt",
+  "keywords": [
+    "topojson",
+    "geojson",
+    "shapefile"
+  ],
+  "author": {
+    "name": "Michele Orsi",
+    "url": "http://micheleorsi.it"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/micheleorsi/datavisualization.git"
+  },
+  "devDependencies": {
+    "topojson": "*"
+  },
+  "license" : "MIT"
+}

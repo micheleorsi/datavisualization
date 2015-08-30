@@ -4,8 +4,8 @@ This datavisualization shows resindential solar panels installed in California b
 
 Data visualization
 ------------------
-[Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html)
-[Watt/population per zipcode in 2012](http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html)
+* [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html)
+* [Watt/population per zipcode in 2012](http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html)
 
 Installing via Homebrew
 -----------------------

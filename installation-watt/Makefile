@@ -1,5 +1,11 @@
 
-default: clean output/trend2007.csv output/trend2012.csv
+default: clean output/ca.topo.json output/trend2007.csv output/trend2012.csv
+
+# topojson to work in the dataviz
+output/ca.topo.json: shp/ca/counties.shp shp/tl_2010_06_zcta510.shp
+	mkdir -p $(dir $@)
+	node_modules/.bin/topojson \
+		--id-property ZCTA5CE10 -p -o $@ shp/ca/counties.shp shp/tl_2010_06_zcta510.shp
 
 # mapping from zip to counties
 csv/zcta_county_rel_10.csv:
@@ -21,6 +27,11 @@ output/trend2007.csv: db/installation.db
 output/trend2012.csv: db/installation.db
 	mkdir -p $(dir $@)
 	sqlite3 db/installation.db < commands/trend2012.sql
+	
+# installationwithcounties file
+output/installationwithcounties.csv: db/installation.db
+	mkdir -p $(dir $@)
+	sqlite3 db/installation.db < commands/installationwithcounties.sql
 
 # shape file with California zip code
 zip/tl_2010_06_zcta510.zip:

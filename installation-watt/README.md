@@ -23,7 +23,7 @@ Here's how to do that on Ubuntu Linux:
 
 ```bash
 sudo apt-get update
-sudo apt-get install nodejs npm curl sqlite gdal-bin git
+sudo apt-get install nodejs npm nodejs-legacy curl unzip sqlite gdal-bin git
 ```
 
 Then, clone this repository and install its dependencies:

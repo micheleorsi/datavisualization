@@ -10,10 +10,19 @@ Data visualization
 Installing via Homebrew
 -----------------------
 Before you'll need to install Node.js, GDAL and Sqlite. 
-Here’s how to do that using [Homebrew](http://brew.sh/) on Mac OS X:
+
+### On Mac OS X
+Here's how to do that using [Homebrew](http://brew.sh/):
 
 ```bash
 brew install node gdal sqlite
+```
+
+### On Debian/Ubuntu Linux
+Here's how to do that on Ubuntu Linux:
+
+```bash
+sudo apt-get install node sqlite gdal-bin
 ```
 
 Then, clone this repository and install its dependencies:
@@ -69,7 +78,7 @@ In this file there are several files that is not possible to automatically downl
   15. On the next page, click the "Download" link under "Actions"
   16. In the pop-up, click "OK"
   17. Wait for it to "build" your file
-  18. When it’s ready, click "DOWNLOAD"
+  18. When it's ready, click "DOWNLOAD"
   19. Finally, expand the downloaded zip file and you will find the three files
   
 References
@@ -80,7 +89,7 @@ Here they are:
 * [climate map produced by Berkely](http://coolclimate.berkeley.edu/maps)
 * [tool to select the best colors](http://colorbrewer2.org/)
 * [Choropleth Maps](http://synthesis.sbecker.net/articles/2012/07/18/learning-d3-part-7-choropleth-maps)
-* [let’s make a map](http://bost.ocks.org/mike/map/)
+* [let's make a map](http://bost.ocks.org/mike/map/)
 * [mapping town and cities](http://techslides.com/mapping-town-boundaries-with-d3)
 * [presentation on geojson](http://lyzidiamond.com/geojson-in-maps/#83)
 * [tutorial for geodata and d3js](http://www.tnoda.com/blog/2013-12-07)

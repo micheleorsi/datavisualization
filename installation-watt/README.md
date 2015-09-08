@@ -2,6 +2,20 @@ Installation watt
 =================
 This datavisualization shows resindential solar panels installed in California between 2007-2012. Data is expressed in Watt installed per population 
 
+Screenshots
+-----------
+
+<table>
+<tr height="162">
+<td>ZIP code 2007<br><a href="https://cloud.githubusercontent.com/assets/1033117/9747609/f94e3288-567e-11e5-88e8-9d325c1dbd3e.png"><img src="https://cloud.githubusercontent.com/assets/1033117/9747609/f94e3288-567e-11e5-88e8-9d325c1dbd3e.png"></a></td>
+<td>ZIP code 2012<br><a href="https://cloud.githubusercontent.com/assets/1033117/9747610/fbd0e3d4-567e-11e5-9742-32655bce3e0e.png"><img src="https://cloud.githubusercontent.com/assets/1033117/9747610/fbd0e3d4-567e-11e5-9742-32655bce3e0e.png"></a></td>
+</tr>
+<tr height="162">
+<td>Counties 2007<br><a href="https://cloud.githubusercontent.com/assets/1033117/9747611/fbf70582-567e-11e5-865a-29f27f8682c9.png"><img src="https://cloud.githubusercontent.com/assets/1033117/9747611/fbf70582-567e-11e5-865a-29f27f8682c9.png"></a></td>
+<td>Counties 2012<br><a href="https://cloud.githubusercontent.com/assets/1033117/9747612/fd51beb8-567e-11e5-9719-e7293bb9c6af.png"><img src="https://cloud.githubusercontent.com/assets/1033117/9747612/fd51beb8-567e-11e5-9719-e7293bb9c6af.png"></a></td>
+</tr>
+</table>
+
 Data visualization
 ------------------
 * [Watt/population per zipcode in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html)
@@ -9,6 +23,8 @@ Data visualization
 
 * [Watt/population per county in 2007](http://micheleorsi.github.io/datavisualization/installation-watt/indexcounty2007.html)
 * [Watt/population per county in 2012](http://micheleorsi.github.io/datavisualization/installation-watt/indexcounty2012.html)
+
+
 
 Installing via Homebrew
 -----------------------

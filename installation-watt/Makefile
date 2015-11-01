@@ -1,6 +1,11 @@
 
-default: output/ca.topo.json output/ca-counties.topo.json output/trend2007.csv output/trend2012.csv output/trendcounty2007.csv output/trendcounty2012.csv
-
+default: output/ca.topo.json \
+	output/ca-counties.topo.json \
+	output/trend2007.csv \
+	output/trend2012.csv \
+	output/trendcounty2007.csv \
+	output/trendcounty2012.csv
+	
 # temp queries to calculate threesholds
 calculatethreshold: db/installation.db output/trendcounty2007.csv output/trendcounty2012.csv
 	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 6" 
@@ -86,9 +91,11 @@ shp/%/counties.shp: shp/us/counties.shp
 	rm -f $@
 	ogr2ogr -f 'ESRI Shapefile' -where "STATE = '`echo $* | tr a-z A-Z`'" $@ $<
 	
-clean:
-	rm -fR csv
+clean/db:
 	rm -fR db
+	
+clean: clean/db
+	rm -fR csv
 	rm -fR gz
 	rm -fR output
 	rm -fR shp

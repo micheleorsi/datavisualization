@@ -14,20 +14,32 @@
 .mode csv
 .import csv/zcta_county_rel_10.csv zipmapping
 
+-- create table with population sum for each county
+CREATE TABLE countypopulation AS
+SELECT Z1.GEOID, SUM(Z1.POPPT) AS POPULATION_COUNTY
+FROM zipmapping AS Z1
+GROUP BY Z1.GEOID;
 
--- create installation data file with county code and population (POPPT: the population of that specific zipcode on that specific county)
+-- Description: installation data + codes for county, state and population data per zipcode
+-- INSTALLATION: installation per zipcode per year
+-- TREND: trend per zipcode per year
+-- STATE: state code
+-- POPULATION: population of that specific zipcode (on that specific county)
+-- COUNTY: county code
 CREATE TABLE installationcounties AS 
 SELECT I.zipcode AS ZIPCODE, I.year AS YEAR, I.installation_zip AS INSTALLATION, I.trend AS TREND, Z.STATE AS STATE, Z.POPPT AS POPULATION, Z.GEOID AS COUNTY
 FROM installation AS I 
 INNER JOIN zipmapping AS Z ON (I.zipcode=Z.ZCTA5);
 
--- create installation2007 table, where there is a zipcode and a value for trend07
+-- create installation2007 table, where there is a zipcode and a value for trend07 (based on data available in installation file)
+-- TREND2007: the trend of the specific zipcode for 2007 year (if null the value is 0)
 CREATE TABLE installation2007 AS 
 SELECT I1.zipcode AS ZIPCODE, ifnull(I2.trend, 0) AS TREND2007
 FROM (SELECT zipcode FROM installation GROUP BY zipcode) AS I1 
 LEFT OUTER JOIN installation AS I2 ON (I1.zipcode=I2.zipcode) AND (I2.year = 2007);
 
--- create installation2007 table, where there is a zipcode and a value for trend12
+-- create installation2012 table, where there is a zipcode and a value for trend12 (based on data available in installation file)
+-- TREND2012: the trend of the specific zipcode for 2012 year (if null value, take the max of all trends)
 CREATE TABLE installation2012 AS 
 SELECT I1.zipcode AS ZIPCODE, ifnull(I2.trend, I1.TREND12) AS TREND2012
 FROM (SELECT zipcode, MAX(trend) AS TREND12 FROM installation GROUP BY zipcode) AS I1
@@ -55,15 +67,3 @@ SELECT COUNTY, SUM(I1.TREND2012) AS TREND, SUM(I2.POPULATION) AS POPULATION, SUM
 FROM installation2012 AS I1
 INNER JOIN installationcounties AS I2 ON (I1.ZIPCODE=I2.ZIPCODE)
 GROUP BY COUNTY;
-
--- Threeshold
--- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 191;
--- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 351; 
--- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 511; 
--- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 671; 
--- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 831; 
--- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 991;
--- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 1151;
--- SELECT *  FROM trend2012 ORDER BY RATIO ASC LIMIT 1311;
-
-

@@ -32,6 +32,17 @@ SELECT I1.zipcode AS ZIPCODE, ifnull(I2.trend, 0) AS TREND2007
 FROM (SELECT zipcode FROM installation GROUP BY zipcode) AS I1
 LEFT OUTER JOIN installation AS I2 ON (I1.zipcode=I2.zipcode) AND (I2.year = 2007);
 
+-- sum of installation by county
+-- INSTALLATION_PER_COUNTY: sum of installation per county per year
+CREATE TABLE installationcounties_summary AS
+SELECT I1.COUNTY AS COUNTY, I1.YEAR AS YEAR, SUM(I1.INSTALLATION)*1.0/P1.POPULATION_COUNTY AS INSTALLATION_PER_COUNTY
+FROM (
+  SELECT Z1.GEOID AS COUNTY_CODE, SUM(Z1.POPPT) AS POPULATION_COUNTY
+  FROM zipmapping AS Z1
+  GROUP BY Z1.GEOID
+) AS P1 INNER JOIN installationcounties AS I1 ON(P1.COUNTY_CODE=I1.COUNTY)
+GROUP BY I1.COUNTY,I1.YEAR;
+
 -- create installation2012 table, where there is a zipcode and a value for trend12 (based on data available in installation file)
 -- TREND2012: the trend of the specific zipcode for 2012 year (if null value, take the max of all trends)
 CREATE TABLE installation2012 AS

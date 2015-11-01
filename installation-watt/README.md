@@ -48,14 +48,9 @@ cd datavisualization/installation-watt
 npm install
 ```
 
-Make targets
-------------
-In order to see the datavisualization you need three files:
-* output/ca.topo.json 
-* output/trend2007.csv 
-* output/trend2012.csv
-
-You can generate them with this command
+Data
+----
+You can generate all the data needed with this command
 ```bash
 make
 ```
@@ -68,12 +63,12 @@ python -m SimpleHTTPServer 8000
 ```
 
 Then you should visit the HTML files at 
-* http://localhost:8000/index2007.html
-* http://localhost:8000/index2012.html
-* http://localhost:8000/indexcounty2007.html
-* http://localhost:8000/indexcounty2012.html
-* http://localhost:8000/sonoma2007.html
-* http://localhost:8000/sonoma2012.html
+* http://localhost:8000/index2007.html (this works only locally on your machine)
+* http://localhost:8000/index2012.html (this works only locally on your machine)
+* http://localhost:8000/indexcounty2007.html (this works only locally on your machine)
+* http://localhost:8000/indexcounty2012.html (this works only locally on your machine)
+* http://localhost:8000/sonoma2007.html (this works only locally on your machine)
+* http://localhost:8000/sonoma2012.html (this works only locally on your machine)
 
 
 ASSETS folder

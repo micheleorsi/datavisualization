@@ -14,12 +14,6 @@
 .mode csv
 .import csv/zcta_county_rel_10.csv zipmapping
 
--- create table with population sum for each county
-CREATE TABLE countypopulation AS
-SELECT Z1.GEOID, SUM(Z1.POPPT) AS POPULATION_COUNTY
-FROM zipmapping AS Z1
-GROUP BY Z1.GEOID;
-
 -- Description: installation data + codes for county, state and population data per zipcode
 -- INSTALLATION: installation per zipcode per year
 -- TREND: trend per zipcode per year

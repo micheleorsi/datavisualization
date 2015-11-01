@@ -68,12 +68,12 @@ python -m SimpleHTTPServer 8000
 ```
 
 Then you should visit the HTML files at 
-* (http://localhost:8000/index2007.html)
-* (http://localhost:8000/index2012.html)
-* (http://localhost:8000/indexcounty2007.html)
-* (http://localhost:8000/indexcounty2012.html)
-* (http://localhost:8000/sonoma2007.html)
-* (http://localhost:8000/sonoma2012.html)
+* http://localhost:8000/index2007.html
+* http://localhost:8000/index2012.html
+* http://localhost:8000/indexcounty2007.html
+* http://localhost:8000/indexcounty2012.html
+* http://localhost:8000/sonoma2007.html
+* http://localhost:8000/sonoma2012.html
 
 
 ASSETS folder

@@ -1,6 +1,7 @@
 Installation watt
 =================
-This datavisualization shows resindential solar panels installed in California between 2007-2012. Data is expressed in Watt installed per population 
+This datavisualization shows resindential solar panels installed in California between 2007-2012. 
+Data is expressed in Watt installed per population 
 
 Data visualization
 ------------------
@@ -14,10 +15,14 @@ Data visualization
 <td>Counties 2007<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/indexcounty2007.html"><img src="https://cloud.githubusercontent.com/assets/1033117/9747611/fbf70582-567e-11e5-865a-29f27f8682c9.png"></a></td>
 <td>Counties 2012<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/indexcounty2012.html"><img src="https://cloud.githubusercontent.com/assets/1033117/9747612/fd51beb8-567e-11e5-9719-e7293bb9c6af.png"></a></td>
 </tr>
+<tr height="162">
+<td>Sonoma County 2007<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/sonoma2007.html"><img src="https://cloud.githubusercontent.com/assets/1033117/10869833/66d47842-80bb-11e5-8f7d-005e9b887546.png"></a></td>
+<td>Sonoma County 2012<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/sonoma2012.html"><img src="https://cloud.githubusercontent.com/assets/1033117/10869832/586cd128-80bb-11e5-968a-ba44eb695798.png"></a></td>
+</tr>
 </table>
 
-Installing via Homebrew
------------------------
+Usage
+-----
 Before to start you'll need to install some tools.
 
 ### On Mac OS X
@@ -54,6 +59,21 @@ You can generate them with this command
 ```bash
 make
 ```
+
+Run locally
+-----------
+You should run a local server
+```bash
+python -m SimpleHTTPServer 8000
+```
+
+Then you should visit the HTML files at 
+* (http://localhost:8000/index2007.html)
+* (http://localhost:8000/index2012.html)
+* (http://localhost:8000/indexcounty2007.html)
+* (http://localhost:8000/indexcounty2012.html)
+* (http://localhost:8000/sonoma2007.html)
+* (http://localhost:8000/sonoma2012.html)
 
 
 ASSETS folder

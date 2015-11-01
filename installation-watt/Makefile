@@ -6,6 +6,22 @@ default: output/ca.topo.json \
 	output/trendcounty2007.csv \
 	output/trendcounty2012.csv
 	
+# temp queries to calculate relevant counties
+paper_Table1: db/installation.db
+	echo "\nLake County"
+	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06033\""
+	echo "\nNapa County"
+	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06055\""
+	echo "\nMendocino County"
+	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06045\""
+	echo "\nSolano County"
+	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06095\""
+	echo "\nSonoma County"
+	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06097\""
+	echo "\nMarin County"
+	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06041\""
+
+
 # temp queries to calculate threesholds
 calculatethreshold: db/installation.db output/trendcounty2007.csv output/trendcounty2012.csv
 	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 6" 
@@ -94,10 +110,22 @@ shp/%/counties.shp: shp/us/counties.shp
 clean/db:
 	rm -fR db
 	
-clean: clean/db
-	rm -fR csv
-	rm -fR gz
+clean/output:
 	rm -fR output
+	
+clean/csv:
+	rm -fR csv
+
+clean/gz:
+	rm -fR gz
+	
+clean/shp:
 	rm -fR shp
+
+clean/zip:
 	rm -fR zip
-	rm -fR tmp
+
+clean/tmp:
+	rm -fr tmp
+
+clean: clean/db clean/output clean/csv clean/gz clean/shp clean/zip clean/tmp

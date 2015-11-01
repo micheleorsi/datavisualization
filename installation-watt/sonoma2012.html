@@ -153,7 +153,8 @@ function ready(error, map, data) {
   
   // county borders
   svg.append("path")
-      .datum(topojson.mesh(map, map.objects.counties, function(a, b) { 
+      .datum(topojson.mesh(map, map.objects.counties, function(a, b) {
+      	if(a.properties.COUNTY == "Sonoma County") return true;
         return a !== b; 
       }))
       .attr("class", "counties")

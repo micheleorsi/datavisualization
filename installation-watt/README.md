@@ -62,13 +62,13 @@ You should run a local server
 python -m SimpleHTTPServer 8000
 ```
 
-Then you should visit the HTML files at 
-* (http://localhost:8000/index2007.html) (this works only locally on your machine)
-* (http://localhost:8000/index2012.html) (this works only locally on your machine)
-* (http://localhost:8000/indexcounty2007.html) (this works only locally on your machine)
-* (http://localhost:8000/indexcounty2012.html) (this works only locally on your machine)
-* (http://localhost:8000/sonoma2007.html) (this works only locally on your machine)
-* (http://localhost:8000/sonoma2012.html) (this works only locally on your machine)
+Then you should visit the HTML files (this works only locally on your machine) at 
+* [index2007.html](http://localhost:8000/index2007.html) 
+* [index2012.html](http://localhost:8000/index2012.html)
+* [indexcounty2007.html](http://localhost:8000/indexcounty2007.html)
+* [indexcounty2012.html](http://localhost:8000/indexcounty2012.html)
+* [sonoma2007.html](http://localhost:8000/sonoma2007.html)
+* [sonoma2012.html](http://localhost:8000/sonoma2012.html)
 
 
 ASSETS folder

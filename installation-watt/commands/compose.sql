@@ -39,7 +39,7 @@ SELECT I1.ZIPCODE AS ZIPCODE, TREND2012, ifnull(P1.Estimate, -100) AS POPULATION
 FROM installation2012 AS I1
 LEFT OUTER JOIN population2012 AS P1 ON (I1.zipcode=P1.Id2);
 
--- Description: installation data + codes for county, state and population data per zipcode
+-- Description: installation data + codes for county, state and population data per zipcode, restricted for California state
 -- INSTALLATION: installation per zipcode per year
 -- TREND: trend per zipcode per year
 -- STATE: state code
@@ -48,14 +48,17 @@ LEFT OUTER JOIN population2012 AS P1 ON (I1.zipcode=P1.Id2);
 CREATE TABLE installationcounties AS
 SELECT I.zipcode AS ZIPCODE, I.year AS YEAR, I.installation_zip AS INSTALLATION, I.trend AS TREND, Z.STATE AS STATE, Z.POPPT AS POPULATION, Z.GEOID AS COUNTY
 FROM installation AS I
-INNER JOIN zipmapping AS Z ON (I.zipcode=Z.ZCTA5);
+INNER JOIN zipmapping AS Z ON (I.zipcode=Z.ZCTA5)
+WHERE Z.STATE="06";
 
+-- trend by county only in California in 2007
 CREATE TABLE trendcounty2007 AS
 SELECT COUNTY, SUM(I1.TREND2007) AS TREND, SUM(I2.POPULATION) AS POPULATION, SUM(I1.TREND2007)*1.0/SUM(I2.POPULATION) AS RATIO
 FROM installation2007 AS I1
 INNER JOIN installationcounties AS I2 ON (I1.ZIPCODE=I2.ZIPCODE)
 GROUP BY COUNTY;
 
+-- trend by county only in California in 2012
 CREATE TABLE trendcounty2012 AS
 SELECT COUNTY, SUM(I1.TREND2012) AS TREND, SUM(I2.POPULATION) AS POPULATION, SUM(I1.TREND2012)*1.0/SUM(I2.POPULATION) AS RATIO
 FROM installation2012 AS I1

@@ -1,8 +1,8 @@
 -- import population 2011
-.mode csv
-.import assets/ACS_11_5YR_B01003_with_ann.csv population2011
+-- .mode csv
+-- .import assets/ACS_11_5YR_B01003_with_ann.csv population2011
 
--- import population 2012
+-- import California population 2012 
 .mode csv
 .import assets/ACS_12_5YR_B01003_with_ann.csv population2012
 
@@ -10,7 +10,7 @@
 .mode csv
 .import assets/installation-data.csv installation
 
--- import zip mapping
+-- import zip mapping all over US
 .mode csv
 .import csv/zcta_county_rel_10.csv zipmapping
 
@@ -65,10 +65,6 @@ GROUP BY COUNTY;
 -- sum of installation by county
 -- INSTALLATION_PER_COUNTY: sum of installation per county per year
 CREATE TABLE installationcounties_summary AS
-SELECT I1.COUNTY AS COUNTY, I1.YEAR AS YEAR, SUM(I1.INSTALLATION)*1.0/P1.POPULATION_COUNTY AS INSTALLATION_PER_COUNTY
-FROM (
-  SELECT Z1.GEOID AS COUNTY_CODE, SUM(Z1.POPPT) AS POPULATION_COUNTY
-  FROM zipmapping AS Z1
-  GROUP BY Z1.GEOID
-) AS P1 INNER JOIN installationcounties AS I1 ON(P1.COUNTY_CODE=I1.COUNTY)
-GROUP BY I1.COUNTY,I1.YEAR;
+SELECT COUNTY, YEAR, SUM(INSTALLATION) AS INSTALLATION, SUM(POPULATION) AS POPULATION, SUM(INSTALLATION)*1.0/SUM(POPULATION) AS RATIO
+FROM installationcounties
+GROUP BY COUNTY, YEAR;

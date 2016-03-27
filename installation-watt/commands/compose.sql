@@ -2,7 +2,7 @@
 -- .mode csv
 -- .import assets/ACS_11_5YR_B01003_with_ann.csv population2011
 
--- import California population 2012 
+-- import California population 2012
 .mode csv
 .import assets/ACS_12_5YR_B01003_with_ann.csv population2012
 
@@ -62,8 +62,7 @@ FROM installation2012 AS I1
 INNER JOIN installationcounties AS I2 ON (I1.ZIPCODE=I2.ZIPCODE)
 GROUP BY COUNTY;
 
--- sum of installation by county
--- INSTALLATION_PER_COUNTY: sum of installation per county per year
+-- aggregation of total installation by county, by year
 CREATE TABLE installationcounties_summary AS
 SELECT COUNTY, YEAR, SUM(INSTALLATION) AS INSTALLATION, SUM(POPULATION) AS POPULATION, SUM(INSTALLATION)*1.0/SUM(POPULATION) AS RATIO
 FROM installationcounties

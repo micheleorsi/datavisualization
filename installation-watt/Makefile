@@ -7,38 +7,19 @@ default: output/ca.topo.json \
 	output/trendcounty2012.csv
 	
 # temp queries to calculate relevant counties
-paper_Table1: db/installation.db
-	echo "\nLake County"
-	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06033\";"
-	echo "\nNapa County"
-	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06055\";"
-	echo "\nMendocino County"
-	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06045\";"
-	echo "\nSolano County"
-	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06095\";"
-	echo "\nSonoma County"
-	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06097\";"
-	echo "\nMarin County"
-	sqlite3 db/installation.db "SELECT * FROM installationcounties_summary WHERE COUNTY=\"06041\";"
-	echo "\nAll California counties, without Sonoma County by year"
-	rm -fR tmp/export.sql
-	echo ".headers on" >> tmp/export.sql
-	echo ".mode csv" >> tmp/export.sql
-	echo ".output output/californiaInstallationWithoutSonoma.csv" >> tmp/export.sql
-	echo "SELECT I1.STATE AS STATE, I1.YEAR AS YEAR, \
-		SUM(I1.INSTALLATION) AS TOT_INSTALLATION, \
-		SUM(I1.INSTALLATION)*1.0/P1.POPULATION_STATE AS INSTALLATION_DIVIDED_BY_POPULATION \
-	FROM ( \
-		SELECT Z1.STATE AS STATE, SUM(Z1.POPPT) AS POPULATION_STATE \
-		FROM zipmapping AS Z1 \
-		WHERE Z1.GEOID != \"06097\" \
-		GROUP BY Z1.STATE \
-		) AS P1 INNER JOIN installationcounties AS I1 ON(P1.STATE=I1.STATE) \
-		WHERE I1.COUNTY != \"06097\" \
-		AND I1.STATE = \"06\" \
-	GROUP BY I1.STATE, I1.YEAR;" >> tmp/export.sql
-	sqlite3 db/installation.db < tmp/export.sql	
-
+paper: db/installation.db
+	echo "\nCalifornia aggregation, 2007"
+	sqlite3 db/installation.db "SELECT SUM(TREND)/SUM(POPULATION) FROM trendcounty2007;"
+	
+	echo "\nCalifornia aggregation, 2012"
+	sqlite3 db/installation.db "SELECT SUM(TREND)/SUM(POPULATION) FROM trendcounty2012;"
+	
+	echo "\nCalifornia aggregation, without Sonoma County 2007"
+	sqlite3 db/installation.db "SELECT SUM(TREND)/SUM(POPULATION) FROM trendcounty2007 WHERE COUNTY!=\"06097\";"
+	
+	echo "\nCalifornia aggregation, without Sonoma County 2012"
+	sqlite3 db/installation.db "SELECT SUM(TREND)/SUM(POPULATION) FROM trendcounty2012 WHERE COUNTY!=\"06097\";"	
+		
 # temp queries to calculate threesholds
 calculatethreshold: db/installation.db output/trendcounty2007.csv output/trendcounty2012.csv
 	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 6" 

@@ -14,11 +14,14 @@
 .mode csv
 .import csv/zcta_county_rel_10.csv zipmapping
 
+CREATE TABLE allzipcode AS
+SELECT zipcode FROM installation GROUP BY zipcode;
+
 -- create installation2007 table, where there is a zipcode and a value for trend07 (based on data available in installation file)
 -- TREND2007: the trend of the specific zipcode for 2007 year (if null the value is 0)
 CREATE TABLE installation2007 AS
 SELECT I1.zipcode AS ZIPCODE, ifnull(I2.trend, 0) AS TREND2007
-FROM (SELECT zipcode FROM installation GROUP BY zipcode) AS I1
+FROM allzipcode AS I1
 LEFT OUTER JOIN installation AS I2 ON (I1.zipcode=I2.zipcode) AND (I2.year = 2007);
 
 -- create installation2012 table, where there is a zipcode and a value for trend12 (based on data available in installation file)
@@ -64,3 +67,11 @@ SELECT COUNTY, SUM(I1.TREND2012) AS TREND, SUM(I2.POPULATION) AS POPULATION, SUM
 FROM installation2012 AS I1
 INNER JOIN installationcounties AS I2 ON (I1.ZIPCODE=I2.ZIPCODE)
 GROUP BY COUNTY;
+
+CREATE TABLE installationbycountybyyear AS
+SELECT Z.GEOID AS COUNTY_ID, I.year AS YEAR, SUM(I.installation_zip) AS INSTALLATION, Z.STATE AS STATE,
+  SUM(Z.POPPT) AS POPULATION, SUM(I.installation_zip)*1.0/SUM(Z.POPPT) AS INTSALLATION_RATIO
+FROM installation AS I
+INNER JOIN zipmapping AS Z ON (I.zipcode=Z.ZCTA5)
+WHERE Z.STATE="06"
+GROUP BY COUNTY_ID,YEAR;

@@ -4,7 +4,8 @@ default: output/ca.topo.json \
 	output/trend2007.csv \
 	output/trend2012.csv \
 	output/trendcounty2007.csv \
-	output/trendcounty2012.csv
+	output/trendcounty2012.csv \
+	output/installationbycountybyyear.csv
 	
 # temp queries to calculate relevant counties
 paper: db/installation.db

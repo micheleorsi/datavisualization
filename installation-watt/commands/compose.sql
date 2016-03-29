@@ -68,9 +68,10 @@ FROM installation2012 AS I1
 INNER JOIN installationcounties AS I2 ON (I1.ZIPCODE=I2.ZIPCODE)
 GROUP BY COUNTY;
 
+-- installation grouped by county and year
 CREATE TABLE installationbycountybyyear AS
 SELECT Z.GEOID AS COUNTY_ID, I.year AS YEAR, SUM(I.installation_zip) AS INSTALLATION, Z.STATE AS STATE,
-  SUM(Z.POPPT) AS POPULATION, SUM(I.installation_zip)*1.0/SUM(Z.POPPT) AS INTSALLATION_RATIO
+  SUM(Z.POPPT) AS POPULATION, SUM(I.installation_zip)*1.0/SUM(Z.POPPT) AS INSTALLATION_RATIO
 FROM installation AS I
 INNER JOIN zipmapping AS Z ON (I.zipcode=Z.ZCTA5)
 WHERE Z.STATE="06"

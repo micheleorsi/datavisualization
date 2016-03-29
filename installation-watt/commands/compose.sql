@@ -30,12 +30,12 @@ LEFT OUTER JOIN installation AS I2 ON (I1.zipcode=I2.zipcode) AND (I2.year = 201
 
 -- zipcode, a value for population and one for the ratio
 CREATE TABLE trend2007 AS
-SELECT I1.ZIPCODE AS ZIPCODE, TREND2007, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(TREND2007*1.0/P1.Estimate, -100) AS RATIO
+SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2007, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(I1.TREND2007*1.0/P1.Estimate, -100) AS RATIO
 FROM installation2007 AS I1
 LEFT OUTER JOIN population2012 AS P1 ON (I1.ZIPCODE=P1.Id2);
 
 CREATE TABLE trend2012 AS
-SELECT I1.ZIPCODE AS ZIPCODE, TREND2012, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(TREND2012*1.0/P1.Estimate, -100) AS RATIO
+SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2012, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(I1.TREND2012*1.0/P1.Estimate, -100) AS RATIO
 FROM installation2012 AS I1
 LEFT OUTER JOIN population2012 AS P1 ON (I1.zipcode=P1.Id2);
 

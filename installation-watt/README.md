@@ -188,7 +188,7 @@ Here they are:
 * [tutorial for geodata and d3js](http://www.tnoda.com/blog/2013-12-07)
 * [GUI for GeoJSON and TopoJSON](http://shancarter.github.io/distillery)
 * [geo projections](https://github.com/mbostock/d3/wiki/Geo-Projections)
-* [how to extract zip files for california](http://tech.taskrabbit.com/blog/2014/12/04/maps-for-data-* exploration/)
+* [how to extract zip files for california](http://tech.taskrabbit.com/blog/2014/12/04/maps-for-data-exploration/)
 * [California population density](http://bl.ocks.org/mbostock/5562380)
 * [Albers Equal-Area Conic](http://bl.ocks.org/mbostock/3734308)
 * [Lambert Conformal Conic](http://bl.ocks.org/mbostock/3734321)

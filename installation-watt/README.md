@@ -93,6 +93,7 @@ It contains the following columns:
 Information regarding population for each zipcode in California.
 
 To download:
+
 1. Go to [American FactFinder](http://factfinder2.census.gov) (pay attention that from some specific internet providers the website is not available)
 2. Find where it says "American Community Survey" and click "get data »"
 3. Click the blue "Geographies" button on the left

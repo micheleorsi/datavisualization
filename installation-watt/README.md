@@ -143,8 +143,6 @@ It contains the following columns:
 
 ## Data downloaded
 
-Here is some informations regarding data used:
-
 ### zcta_county_rel_10.csv field description
 
 Information available [here](https://www.census.gov/geo/maps-data/data/zcta_rel_layout.html)

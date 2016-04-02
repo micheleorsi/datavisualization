@@ -86,7 +86,7 @@ In this file there are several files that is not possible to automatically downl
   The study starts from these data: https://www.californiasolarstatistics.ca.gov
   
 * ACS_12_5YR_B01003_with_ann.csv, ACS_11_5YR_B01003_with_ann.csv: information regarding population for each zipcode. To download:
-  1. Go to factfinder2.census.gov (pay attention that from some specific internet providers the website is not available)
+  1. Go to [American FactFinder](http://factfinder2.census.gov) (pay attention that from some specific internet providers the website is not available)
   2. Find where it says "American Community Survey" and click "get data »"
   3. Click the blue "Geographies" button on the left
   4. In the pop-up, select 5-Digit ZIP Code Tabulation Area - 860 in the "geographic type" menu

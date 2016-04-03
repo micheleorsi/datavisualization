@@ -7,12 +7,12 @@ Data is expressed in Watt installed per population
 
 <table>
 <tr height="162">
-<td>ZIP code 2007<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html"><img src="https://cloud.githubusercontent.com/assets/1033117/9747609/f94e3288-567e-11e5-88e8-9d325c1dbd3e.png"></a></td>
-<td>ZIP code 2012<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html"><img src="https://cloud.githubusercontent.com/assets/1033117/9747610/fbd0e3d4-567e-11e5-9742-32655bce3e0e.png"></a></td>
+<td>ZIP code 2007<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/index2007.html"><img src="https://cloud.githubusercontent.com/assets/1033117/14233041/0c81f1d0-f9b5-11e5-80ed-4d643ba1babf.png"></a></td>
+<td>ZIP code 2012<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/index2012.html"><img src="https://cloud.githubusercontent.com/assets/1033117/14233042/10ac2a3c-f9b5-11e5-845b-c5bee229e595.png"></a></td>
 </tr>
 <tr height="162">
-<td>Sonoma County 2007<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/sonoma2007.html"><img src="https://cloud.githubusercontent.com/assets/1033117/10869833/66d47842-80bb-11e5-8f7d-005e9b887546.png"></a></td>
-<td>Sonoma County 2012<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/sonoma2012.html"><img src="https://cloud.githubusercontent.com/assets/1033117/10869832/586cd128-80bb-11e5-968a-ba44eb695798.png"></a></td>
+<td>Sonoma County 2007<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/sonoma2007.html"><img src="https://cloud.githubusercontent.com/assets/1033117/14233043/10af84a2-f9b5-11e5-800b-4332b0a66e62.png"></a></td>
+<td>Sonoma County 2012<br><a href="http://micheleorsi.github.io/datavisualization/installation-watt/sonoma2012.html"><img src="https://cloud.githubusercontent.com/assets/1033117/14233044/114b641c-f9b5-11e5-9e8f-905366666629.png"></a></td>
 </tr>
 </table>
 

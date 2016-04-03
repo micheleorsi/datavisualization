@@ -2,8 +2,8 @@
 default: output/ca.topo.json \
 	output/ca-counties.topo.json \
 	output/full_mapping_zip_year.csv \
-	output/trend2007.csv \
-	output/trend2012.csv \
+	output/trend_2007_on_population.csv \
+	output/trend_2012_on_population.csv \
 	output/trendcounty2007.csv \
 	output/trendcounty2012.csv \
 	output/installationbycountybyyear.csv \
@@ -16,6 +16,7 @@ default: output/ca.topo.json \
     output/trend_2011.csv \
     output/trend_2012.csv \
     output/installationcounties.csv \
+    output/population2012.csv \
     output/zipmapping.csv
 
 # temp queries to calculate relevant counties

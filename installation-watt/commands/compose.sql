@@ -1,8 +1,14 @@
 -- import population 2011
--- .mode csv
--- .import assets/ACS_11_5YR_B01003_with_ann.csv population2011
 
 -- import California population 2012
+CREATE TABLE population2012(
+  Id TEXT NOT NULL,
+  Id2 CHAR(5) NOT NULL,
+  Geography TEXT NOT NULL,
+  Estimate NUMERIC NOT NULL,
+  Error NUMERIC NOT NULL
+);
+
 .mode csv
 .import assets/ACS_12_5YR_B01003_with_ann.csv population2012
 
@@ -129,13 +135,27 @@ INSERT INTO trend_2012
     LEFT OUTER JOIN (SELECT zipcode, MAX(trend) AS TREND12 FROM installation WHERE year<=2012 GROUP BY zipcode) AS I2 ON (I1.zipcode=I2.zipcode);
 
 -- zipcode, a value for population and one for the ratio
-CREATE TABLE trend2007 AS
-SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2007, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(I1.TREND2007*1.0/P1.Estimate, -100) AS RATIO
+CREATE TABLE trend_2007_on_population(
+  ZIPCODE CHAR(5) NOT NULL,
+  TREND2007 NUMERIC NOT NULL,
+  POPULATION NUMERIC NOT NULL,
+  RATIO NUMERIC NOT NULL
+);
+
+INSERT INTO trend_2007_on_population
+SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2007 AS TREND2007, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(I1.TREND2007*1.0/P1.Estimate, -100) AS RATIO
 FROM trend_2007 AS I1
 LEFT OUTER JOIN population2012 AS P1 ON (I1.ZIPCODE=P1.Id2);
 
-CREATE TABLE trend2012 AS
-SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2012, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(I1.TREND2012*1.0/P1.Estimate, -100) AS RATIO
+CREATE TABLE trend_2012_on_population(
+  ZIPCODE CHAR(5) NOT NULL,
+  TREND2012 NUMERIC NOT NULL,
+  POPULATION NUMERIC NOT NULL,
+  RATIO NUMERIC NOT NULL
+);
+
+INSERT INTO trend_2012_on_population
+SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2012 AS TREND2012, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(I1.TREND2012*1.0/P1.Estimate, -100) AS RATIO
 FROM trend_2012 AS I1
 LEFT OUTER JOIN population2012 AS P1 ON (I1.zipcode=P1.Id2);
 

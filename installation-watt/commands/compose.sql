@@ -128,6 +128,8 @@ CREATE TABLE trend_2007_on_population(
   RATIO NUMERIC NOT NULL
 );
 
+-- some zipcodes reported in the CSI database are not reported in the us census bureau database.
+-- For these missing values we used '-100'
 INSERT INTO trend_2007_on_population
 SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2007 AS TREND2007, ifnull(P.ZIP_POPULATION, -100) AS POPULATION, ifnull(I1.TREND2007*1.0/P.ZIP_POPULATION, -100) AS RATIO
 FROM trend_2007 AS I1
@@ -141,42 +143,10 @@ CREATE TABLE trend_2012_on_population(
   RATIO NUMERIC NOT NULL
 );
 
+-- some zipcodes reported in the CSI database are not reported in the us census bureau database.
+-- For these missing values we used '-100'
 INSERT INTO trend_2012_on_population
 SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2012 AS TREND2012, ifnull(P.ZIP_POPULATION, -100) AS POPULATION, ifnull(I1.TREND2012*1.0/P.ZIP_POPULATION, -100) AS RATIO
 FROM trend_2012 AS I1
 LEFT OUTER JOIN (SELECT ZCTA5, SUM(POPPT) AS ZIP_POPULATION FROM zipmapping WHERE STATE="06" GROUP BY ZCTA5) AS P ON (I1.ZIPCODE=P.ZCTA5);
 
--- Description: installation data + codes for county, state and population data per zipcode, restricted for California state
--- INSTALLATION: installation per zipcode per year
--- TREND: trend per zipcode per year
--- STATE: state code
--- POPULATION: population of that specific zipcode (on that specific county)
--- COUNTY: county code
-CREATE TABLE installationcounties AS
-SELECT I.zipcode AS ZIPCODE, I.year AS YEAR, I.installation_zip AS INSTALLATION, I.trend AS TREND, Z.STATE AS STATE, Z.POPPT AS POPULATION, Z.GEOID AS COUNTY
-FROM installation AS I
-INNER JOIN zipmapping AS Z ON (I.zipcode=Z.ZCTA5)
-WHERE Z.STATE="06";
-
--- trend by county only in California in 2007
-CREATE TABLE trendcounty2007 AS
-SELECT COUNTY, SUM(I1.TREND2007) AS TREND, SUM(I2.POPULATION) AS POPULATION, SUM(I1.TREND2007)*1.0/SUM(I2.POPULATION) AS RATIO
-FROM trend_2007 AS I1
-INNER JOIN installationcounties AS I2 ON (I1.ZIPCODE=I2.ZIPCODE)
-GROUP BY COUNTY;
-
--- trend by county only in California in 2012
-CREATE TABLE trendcounty2012 AS
-SELECT COUNTY, SUM(I1.TREND2012) AS TREND, SUM(I2.POPULATION) AS POPULATION, SUM(I1.TREND2012)*1.0/SUM(I2.POPULATION) AS RATIO
-FROM trend_2012 AS I1
-INNER JOIN installationcounties AS I2 ON (I1.ZIPCODE=I2.ZIPCODE)
-GROUP BY COUNTY;
-
--- installation grouped by county and year
-CREATE TABLE installationbycountybyyear AS
-SELECT Z.GEOID AS COUNTY_ID, I.year AS YEAR, SUM(I.installation_zip) AS INSTALLATION, Z.STATE AS STATE,
-  SUM(Z.POPPT) AS POPULATION, SUM(I.installation_zip)*1.0/SUM(Z.POPPT) AS INSTALLATION_RATIO
-FROM installation AS I
-INNER JOIN zipmapping AS Z ON (I.zipcode=Z.ZCTA5)
-WHERE Z.STATE="06"
-GROUP BY COUNTY_ID,YEAR;

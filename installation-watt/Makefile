@@ -2,34 +2,7 @@
 default: output/ca.topo.json \
 	output/ca-counties.topo.json \
 	output/trend_2007_on_population.csv \
-	output/trend_2012_on_population.csv \
-	output/trendcounty2007.csv \
-	output/trendcounty2012.csv \
-	output/installationbycountybyyear.csv
-
-# temp queries to calculate relevant counties
-paper: db/installation.db
-	echo "\nCalifornia aggregation, 2007"
-	sqlite3 db/installation.db "SELECT SUM(TREND)/SUM(POPULATION) FROM trendcounty2007;"
-	
-	echo "\nCalifornia aggregation, 2012"
-	sqlite3 db/installation.db "SELECT SUM(TREND)/SUM(POPULATION) FROM trendcounty2012;"
-	
-	echo "\nCalifornia aggregation, without Sonoma County 2007"
-	sqlite3 db/installation.db "SELECT SUM(TREND)/SUM(POPULATION) FROM trendcounty2007 WHERE COUNTY!=\"06097\";"
-	
-	echo "\nCalifornia aggregation, without Sonoma County 2012"
-	sqlite3 db/installation.db "SELECT SUM(TREND)/SUM(POPULATION) FROM trendcounty2012 WHERE COUNTY!=\"06097\";"	
-		
-# temp queries to calculate threesholds
-calculatethreshold: db/installation.db output/trendcounty2007.csv output/trendcounty2012.csv
-	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 6" 
-	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 13"
-	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 20"
-	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 27"
-	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 34" 
-	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 41"
-	sqlite3 db/installation.db "SELECT RATIO FROM trendcounty2012 ORDER BY RATIO ASC LIMIT 1 OFFSET 49"
+	output/trend_2012_on_population.csv
 
 # topojson to work in the dataviz
 output/ca.topo.json: shp/ca/counties.shp shp/tl_2010_06_zcta510.shp

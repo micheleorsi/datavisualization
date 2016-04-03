@@ -79,6 +79,9 @@ shp/%/counties.shp: shp/us/counties.shp
 	mkdir -p $(dir $@)
 	rm -f $@
 	ogr2ogr -f 'ESRI Shapefile' -where "STATE = '`echo $* | tr a-z A-Z`'" $@ $<
+
+run: default
+	python -m SimpleHTTPServer 8000
 	
 clean/db:
 	rm -fR db

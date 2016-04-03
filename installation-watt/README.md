@@ -54,7 +54,7 @@ make
 
 You should run a local server
 ```bash
-python -m SimpleHTTPServer 8000
+make run
 ```
 
 Then you should visit the HTML files (this works only locally on your machine) at 

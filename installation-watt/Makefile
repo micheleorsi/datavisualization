@@ -59,7 +59,8 @@ output/ca-counties.topo.json: shp/ca/counties.shp
 csv/zcta_county_rel_10.csv:
 	mkdir -p $(dir $@)
 	curl 'http://www2.census.gov/geo/docs/maps-data/data/rel/zcta_county_rel_10.txt' -o $@.download
-	mv $@.download csv/zcta_county_rel_10.csv
+	tail -n +2 $@.download > csv/zcta_county_rel_10.csv
+	rm $@.download
 
 # DB needed to export output CSV files
 db/installation.db: csv/zcta_county_rel_10.csv

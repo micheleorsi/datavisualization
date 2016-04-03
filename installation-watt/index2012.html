@@ -102,7 +102,7 @@ var svg = d3.select("body")
 // download resources async
 queue()
     .defer(d3.json, "output/ca.topo.json")
-    .defer(d3.csv, "output/trend2012.csv")
+    .defer(d3.csv, "output/trend_2012_on_population.csv")
     .await(ready);
 
 // Start of Choropleth drawing

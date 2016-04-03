@@ -88,32 +88,6 @@ It contains the following columns:
   * `installation_zip`: the installation of that specific year in that specific zipcode
   * `trend`: the sum along the years for that specific zipcode
 
-### ACS_12_5YR_B01003_with_ann.csv, ACS_11_5YR_B01003_with_ann.csv
-
-Information regarding population for each zipcode in California.
-
-To download:
-
-1. Go to [American FactFinder](http://factfinder2.census.gov) (pay attention that from some specific internet providers the website is not available)
-2. Find where it says "American Community Survey" and click "get data »"
-3. Click the blue "Geographies" button on the left
-4. In the pop-up, select 5-Digit ZIP Code Tabulation Area - 860 in the "geographic type" menu
-5. Select California in the resulting "state" menu
-6. Click "All 5-Digit ZIP Code Tabulation Areas fully within/partially within California~5-Digit ZCTA~860~2012"
-7. Click the "ADD TO YOUR SELECTIONS" button
-8. Click "CLOSE" to dismiss the pop-up
-9. Click the blue "Topics" button on the left
-10. In the pop-up, expand the "People" submenu
-11. Expand the "Basic Count/Estimate" submenu
-12. Click "Population Total"
-13. Click "CLOSE" to dismiss the pop-up
-14. In the table, click on the 2014, 2013, 2012, 2011 ACS 5-year estimate named "TOTAL POPULATION"
-15. On the next page, click the "Download" link under "Actions"
-16. In the pop-up, click "OK"
-17. Wait for it to "build" your file
-18. When it's ready, click "DOWNLOAD"
-19. Finally, expand the downloaded zip file and you will find the three files
-
 ### PEP_2013_PEPANNRES_with_ann.csv
 
 Information regarding population by county in California.

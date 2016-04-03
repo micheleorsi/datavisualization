@@ -1,17 +1,3 @@
--- import population 2011
-
--- import California population 2012
-CREATE TABLE population2012(
-  Id TEXT NOT NULL,
-  Id2 CHAR(5) NOT NULL,
-  Geography TEXT NOT NULL,
-  Estimate NUMERIC NOT NULL,
-  Error NUMERIC NOT NULL
-);
-
-.mode csv
-.import assets/ACS_12_5YR_B01003_with_ann.csv population2012
-
 -- import installation data
 CREATE TABLE installation(
   year INT NOT NULL,
@@ -25,7 +11,7 @@ CREATE TABLE installation(
 .mode csv
 .import assets/installation-data.csv installation
 
--- import zip mapping all over US
+-- import zip mapping all over US with population informations
 CREATE TABLE zipmapping(
   ZCTA5 CHAR(5) NOT NULL,
   STATE CHAR(2) NOT NULL,
@@ -134,7 +120,7 @@ INSERT INTO trend_2012
   FROM (SELECT zipcode, year FROM full_mapping_zip_year WHERE year=2012) AS I1
     LEFT OUTER JOIN (SELECT zipcode, MAX(trend) AS TREND12 FROM installation WHERE year<=2012 GROUP BY zipcode) AS I2 ON (I1.zipcode=I2.zipcode);
 
--- zipcode, a value for population and one for the ratio
+-- trend2007 over population
 CREATE TABLE trend_2007_on_population(
   ZIPCODE CHAR(5) NOT NULL,
   TREND2007 NUMERIC NOT NULL,
@@ -143,10 +129,11 @@ CREATE TABLE trend_2007_on_population(
 );
 
 INSERT INTO trend_2007_on_population
-SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2007 AS TREND2007, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(I1.TREND2007*1.0/P1.Estimate, -100) AS RATIO
+SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2007 AS TREND2007, ifnull(P.ZIP_POPULATION, -100) AS POPULATION, ifnull(I1.TREND2007*1.0/P.ZIP_POPULATION, -100) AS RATIO
 FROM trend_2007 AS I1
-LEFT OUTER JOIN population2012 AS P1 ON (I1.ZIPCODE=P1.Id2);
+LEFT OUTER JOIN (SELECT ZCTA5, SUM(POPPT) AS ZIP_POPULATION FROM zipmapping WHERE STATE="06" GROUP BY ZCTA5) AS P ON (I1.ZIPCODE=P.ZCTA5);
 
+-- trend2012 over population
 CREATE TABLE trend_2012_on_population(
   ZIPCODE CHAR(5) NOT NULL,
   TREND2012 NUMERIC NOT NULL,
@@ -155,9 +142,9 @@ CREATE TABLE trend_2012_on_population(
 );
 
 INSERT INTO trend_2012_on_population
-SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2012 AS TREND2012, ifnull(P1.Estimate, -100) AS POPULATION, ifnull(I1.TREND2012*1.0/P1.Estimate, -100) AS RATIO
+SELECT I1.ZIPCODE AS ZIPCODE, I1.TREND2012 AS TREND2012, ifnull(P.ZIP_POPULATION, -100) AS POPULATION, ifnull(I1.TREND2012*1.0/P.ZIP_POPULATION, -100) AS RATIO
 FROM trend_2012 AS I1
-LEFT OUTER JOIN population2012 AS P1 ON (I1.zipcode=P1.Id2);
+LEFT OUTER JOIN (SELECT ZCTA5, SUM(POPPT) AS ZIP_POPULATION FROM zipmapping WHERE STATE="06" GROUP BY ZCTA5) AS P ON (I1.ZIPCODE=P.ZCTA5);
 
 -- Description: installation data + codes for county, state and population data per zipcode, restricted for California state
 -- INSTALLATION: installation per zipcode per year

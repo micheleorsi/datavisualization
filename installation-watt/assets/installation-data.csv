@@ -5,46 +5,30 @@ year,zipcode,city,county,installation_zip,trend
 2010,94620,piedmont,,,5351.399902
 2011,94620,piedmont,,,5351.399902
 2012,94620,piedmont,,,5351.399902
-2007,90001,los angeles,,,0
-2008,90001,los angeles,,,0
-2009,90001,los angeles,,,0
 2010,90001,los angeles,los angeles,1987.699951,1987.699951
 2011,90001,los angeles,,,1987.699951
 2012,90001,los angeles,,,1987.699951
-2007,90002,los angeles,,,0
-2008,90002,los angeles,,,0
 2009,90002,los angeles,los angeles,7616,7616
 2010,90002,los angeles,,,7616
 2011,90002,los angeles,,,7616
 2012,90002,los angeles,,,7616
-2007,90008,los angeles,,,0
-2008,90008,los angeles,,,0
-2009,90008,los angeles,,,0
-2010,90008,los angeles,,,0
 2011,90008,los angeles,los angeles,6330,6330
 2012,90008,los angeles,los angeles,3563.199951,9893.200195
-2007,90022,los angeles,,,0
 2008,90022,los angeles,los angeles,32713.59961,32713.59961
 2009,90022,los angeles,los angeles,20090,52803.60156
 2010,90022,los angeles,los angeles,4020.700195,56824.30078
 2011,90022,los angeles,los angeles,1640,58464.30078
 2012,90022,los angeles,los angeles,40273.59766,98737.89844
-2007,90023,los angeles,,,0
 2008,90023,los angeles,los angeles,7807.399902,7807.399902
 2009,90023,los angeles,,,7807.399902
 2010,90023,los angeles,los angeles,1123.5,8930.900391
 2011,90023,los angeles,,,8930.900391
 2012,90023,los angeles,,,8930.900391
-2007,90038,los angeles,,,0
 2008,90038,los angeles,los angeles,2450,2450
 2009,90038,los angeles,los angeles county,,2450
 2010,90038,los angeles,,,2450
 2011,90038,los angeles,,,2450
 2012,90038,los angeles,los angeles,6039.600098,8489.599609
-2007,90040,los angeles,,,0
-2008,90040,los angeles,,,0
-2009,90040,los angeles,,,0
-2010,90040,los angeles,,,0
 2011,90040,los angeles,los angeles,3577.200195,3577.200195
 2012,90040,los angeles,,,3577.200195
 2007,90043,los angeles,los angeles,7932,7932
@@ -88,7 +72,6 @@ year,zipcode,city,county,installation_zip,trend
 2011,90069,west hollywood,los angeles,4175.600098,18522.90039
 2010,90201,bell,los angeles,9966.599609,9966.599609
 2011,90201,bell,los angeles,4686,14652.59961
-2007,90209,beverly hills,,0,0
 2008,90209,beverly hills,los angeles,20899.80078,20899.80078
 2007,90210,beverly hills,los angeles,14649.59961,14649.59961
 2008,90210,beverly hills,los angeles,57574.19922,72223.79688
@@ -2386,9 +2369,7 @@ year,zipcode,city,county,installation_zip,trend
 2010,92708,fountain valley,orange,137196.2969,289992.5938
 2011,92708,fountain valley,orange,233983.2031,523975.8125
 2012,92708,fountain valley,orange,205274,729249.8125
-2007,92727,,,0,0
 2008,92727,fresno,fresno,2948.800049,2948.800049
-2007,92757,oceanside,,0,0
 2010,92757,oceanside,san diego,1640,1640
 2007,92780,tustin,orange,7095.599609,7095.599609
 2008,92780,tustin,orange,16962.59961,24058.19922

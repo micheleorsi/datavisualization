@@ -50,45 +50,48 @@ CREATE TABLE zipmapping(
 .mode csv
 .import csv/zcta_county_rel_10.csv zipmapping
 
+-- table with all zipcode matching all the years
 CREATE TABLE full_mapping_zip_year AS
   SELECT zipcode, year
   FROM (SELECT DISTINCT zipcode FROM installation)
   CROSS JOIN (SELECT DISTINCT year FROM installation);
 
--- create trend_2007 table, where there is a zipcode and a value for trend07 (based on data available in installation file)
--- TREND2007: the trend of the specific zipcode for 2007 year (if null the value is 0)
--- you should do the join to output zipcode that doesn't have 2007 data
-
+-- table with all zipcode of year 2007 with all the trends fixed (it means that if the zipcode was not present, in this table the trend value is 0)
 CREATE TABLE trend_2007 (
   year INT NOT NULL,
   zipcode CHAR(5) NOT NULL,
   TREND2007 NUMERIC NOT NULL
 );
 
+-- table with all zipcode of year 2008 with all the trends fixed (it means that if the zipcode was not present, in this table the trend value is the one in 2007)
 CREATE TABLE trend_2008 (
   year INT NOT NULL,
   zipcode CHAR(5) NOT NULL,
   TREND2008 NUMERIC NOT NULL
 );
 
+-- table with all zipcode of year 2009 with all the trends fixed (it means that if the zipcode was not present, in this table the trend value is the one in 2008)
 CREATE TABLE trend_2009 (
   year INT NOT NULL,
   zipcode CHAR(5) NOT NULL,
   TREND2009 NUMERIC NOT NULL
 );
 
+-- table with all zipcode of year 2010 with all the trends fixed (it means that if the zipcode was not present, in this table the trend value is the one in 2009)
 CREATE TABLE trend_2010 (
   year INT NOT NULL,
   zipcode CHAR(5) NOT NULL,
   TREND2010 NUMERIC NOT NULL
 );
 
+-- table with all zipcode of year 2011 with all the trends fixed (it means that if the zipcode was not present, in this table the trend value is the one in 2010)
 CREATE TABLE trend_2011 (
   year INT NOT NULL,
   zipcode CHAR(5) NOT NULL,
   TREND2011 NUMERIC NOT NULL
 );
 
+-- table with all zipcode of year 2012 with all the trends fixed (it means that if the zipcode was not present, in this table the trend value is the one in 2011)
 CREATE TABLE trend_2012 (
   year INT NOT NULL,
   zipcode CHAR(5) NOT NULL,
@@ -124,13 +127,6 @@ INSERT INTO trend_2012
   SELECT I1.year, I1.zipcode AS ZIPCODE, ifnull(I2.TREND12,0) AS TREND2012
   FROM (SELECT zipcode, year FROM full_mapping_zip_year WHERE year=2012) AS I1
     LEFT OUTER JOIN (SELECT zipcode, MAX(trend) AS TREND12 FROM installation WHERE year<=2012 GROUP BY zipcode) AS I2 ON (I1.zipcode=I2.zipcode);
-
--- create trend_2012 table, where there is a zipcode and a value for trend12 (based on data available in installation file)
--- TREND2012: the trend of the specific zipcode for 2012 year (if null value, take the max of all trends)
--- INSERT INTO trend_2012
--- SELECT I1.zipcode AS ZIPCODE, ifnull(I2.trend, I1.TREND12) AS TREND2012
--- FROM (SELECT zipcode, MAX(trend) AS TREND12 FROM installation GROUP BY zipcode) AS I1
--- LEFT OUTER JOIN installation AS I2 ON (I1.zipcode=I2.zipcode) AND (I2.year = 2012);
 
 -- zipcode, a value for population and one for the ratio
 CREATE TABLE trend2007 AS

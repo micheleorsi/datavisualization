@@ -88,7 +88,7 @@ It contains the following columns:
   * `installation_zip`: the installation of that specific year in that specific zipcode
   * `trend`: the sum along the years for that specific zipcode
 
-### ACS_12_5YR_B01003_with_ann.csv, ACS_11_5YR_B01003_with_ann.csv
+### ACS_12_5YR_B01003_with_ann.csv
 
 Information regarding population for each zipcode in California.
 

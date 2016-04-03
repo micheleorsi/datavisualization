@@ -1,3 +1,10 @@
+-- import population 2011
+-- .mode csv
+-- .import assets/ACS_11_5YR_B01003_with_ann.csv population2011
+
+-- import California population 2012
+.mode csv
+.import assets/ACS_12_5YR_B01003_with_ann.csv population2012
 
 -- import installation data
 CREATE TABLE installation(
